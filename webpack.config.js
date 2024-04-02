@@ -2,12 +2,12 @@
  var webpack = require('webpack');
 
  module.exports = {
-    entry: './build/Learn.js',
+    entry: './build/Qursus.js',
     output: {
         path: path.resolve(__dirname, '.'),
-        filename: 'learn.bundle.js',
+        filename: 'qursus.bundle.js',
         libraryTarget: "var",
-        library: "Learn"
+        library: "Qursus"
     },
     mode: 'development',
     stats: {

@@ -1,6 +1,6 @@
 import { $ } from "./jquery-lib";
 import { PageClass } from "./Page.class";
-import { ApiService } from "./learn-services";
+import { ApiService } from "./qursus-services";
 import ModuleClass from "./Module.class";
 
 
@@ -128,7 +128,7 @@ export class ChapterClass {
             */
 
             $chapter_edit_button.on('click', () => {
-                window.eq.popup({entity: 'learn\\Chapter', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Chapter', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
                     if(data && data.objects) {
                         for(let object of data.objects) {
                             if(object.id != this.id) continue;
@@ -147,7 +147,7 @@ export class ChapterClass {
 
             $chapter_add_button.on('click', () => {
                 let page_identifier = (this.pages)?this.pages.length+1:1;                
-                window.eq.popup({entity: 'learn\\Page', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['chapter_id', '=', this.id], ['identifier', '=', page_identifier], ['order', '=', page_identifier]], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Page', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['chapter_id', '=', this.id], ['identifier', '=', page_identifier], ['order', '=', page_identifier]], callback: (data:any) => {
                     // append new page to chapter
                     if(data && data.objects) {
                         for(let item of data.objects) {
@@ -172,7 +172,7 @@ export class ChapterClass {
 
             $chapter_delete_button.on('click', () => {
                 if (window.confirm("Chapter is about to be removed. Do you confirm ?")) {
-                    ApiService.update('learn\\Module', [this.parent.id], {'chapters_ids': [-this.id]}, true);
+                    ApiService.update('qursus\\Module', [this.parent.id], {'chapters_ids': [-this.id]}, true);
                     this.parent.propagateContextChange({'$module.remove_chapter': this.id, refresh: true});
                 }
             });

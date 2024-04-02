@@ -1,5 +1,5 @@
 import { $ } from "./jquery-lib";
-import { EnvService } from "./learn-services";
+import { EnvService } from "./qursus-services";
 
 /**
  * This service acts as an interface between client and server and caches view objects to lower the traffic

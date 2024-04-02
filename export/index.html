@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
         <!-- webapp title -->
-        <title>Learn</title>
+        <title>Qursus</title>
         <meta name="title" content="">
         <!-- webapp description -->
         <meta name="description" content="">
@@ -25,8 +25,8 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script type="text/javascript" src="/wp-content/plugins/yb-lms/js/equal.bundle.js"></script>
-        <script type="text/javascript" src="learn.bundle.js"></script>
+        <script type="text/javascript" src="equal.bundle.js"></script>
+        <script type="text/javascript" src="qursus.bundle.js"></script>
 
         <!-- individually load additional languages -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/php.min.js"></script>
@@ -35,13 +35,8 @@
 
 
 $(document).ready( function() {
-
-    //$.getJSON("../modules/ATModule.json", function(json) {
-
     window.eq = new eQ('eq-listener');
-
-    var learn = new Learn();
-
+    var qursus = new Qursus();
 });
 </script>
 
@@ -62,9 +57,9 @@ $(document).ready( function() {
         </div>
     </div>
 
-    <div class="unknown-error">An unknown error occured. Please contact the website admin.</div>
-    <div class="access-restricted">Access is restricted to authentified users.</div>
-    <div class="missing-license">You don't have a licence for this program. Buy it on the <a href="/shop/">traingings store</a>.</div>
+    <div class="unknown-error">An unknown error occurred. Please contact the website admin.</div>
+    <div class="access-restricted">Access is restricted to authenticated users.</div>
+    <div class="missing-license"><!-- You don't have a license for this program. Buy it on the <a href="/shop/">traingings store</a>. --></div>
 
     <div id="sb-root">
         <div id="sb-container"></div>

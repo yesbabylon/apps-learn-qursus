@@ -1,4 +1,4 @@
-var Learn;
+var Qursus;
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -22,7 +22,7 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 /**
  * This service acts as an interface between client and server and caches view objects to lower the traffic
  * Contents that can be cached are :
@@ -72,7 +72,7 @@ var _ApiService = /*#__PURE__*/function () {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 3:
                 environment = _context.sent;
                 _context.next = 6;
@@ -118,7 +118,7 @@ var _ApiService = /*#__PURE__*/function () {
                 body = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : {};
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 4:
                 environment = _context2.sent;
                 _context2.next = 7;
@@ -168,7 +168,7 @@ var _ApiService = /*#__PURE__*/function () {
                 fields = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
                 _context3.prev = 1;
                 _context3.next = 4;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 4:
                 environment = _context3.sent;
                 params = {
@@ -217,7 +217,7 @@ var _ApiService = /*#__PURE__*/function () {
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 3:
                 environment = _context4.sent;
                 params = {
@@ -273,7 +273,7 @@ var _ApiService = /*#__PURE__*/function () {
                 permanent = _args5.length > 2 && _args5[2] !== undefined ? _args5[2] : false;
                 _context5.prev = 1;
                 _context5.next = 4;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 4:
                 environment = _context5.sent;
                 params = {
@@ -322,7 +322,7 @@ var _ApiService = /*#__PURE__*/function () {
               case 0:
                 _context6.prev = 0;
                 _context6.next = 3;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 3:
                 environment = _context6.sent;
                 params = {
@@ -386,7 +386,7 @@ var _ApiService = /*#__PURE__*/function () {
                 result = true;
                 _context7.prev = 3;
                 _context7.next = 6;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 6:
                 environment = _context7.sent;
                 params = {
@@ -437,7 +437,7 @@ var _ApiService = /*#__PURE__*/function () {
               case 0:
                 _context8.prev = 0;
                 _context8.next = 3;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 3:
                 environment = _context8.sent;
                 params = {
@@ -512,7 +512,7 @@ var _ApiService = /*#__PURE__*/function () {
                   limit: limit
                 };
                 _context9.next = 6;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 6:
                 environment = _context9.sent;
                 _context9.next = 9;
@@ -578,7 +578,7 @@ var _ApiService = /*#__PURE__*/function () {
                   limit: limit
                 };
                 _context10.next = 5;
-                return _learnServices.EnvService.getEnv();
+                return _qursusServices.EnvService.getEnv();
               case 5:
                 environment = _context10.sent;
                 _context10.next = 8;
@@ -641,7 +641,7 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtim
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
 var _Page = __webpack_require__(/*! ./Page.class */ "./build/Page.class.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
@@ -749,7 +749,7 @@ var ChapterClass = /*#__PURE__*/function () {
 
         $chapter_edit_button.on('click', function () {
           window.eq.popup({
-            entity: 'learn\\Chapter',
+            entity: 'qursus\\Chapter',
             type: 'form',
             mode: 'edit',
             domain: ['id', '=', _this.id],
@@ -785,7 +785,7 @@ var ChapterClass = /*#__PURE__*/function () {
         $chapter_add_button.on('click', function () {
           var page_identifier = _this.pages ? _this.pages.length + 1 : 1;
           window.eq.popup({
-            entity: 'learn\\Page',
+            entity: 'qursus\\Page',
             type: 'form',
             name: 'create',
             mode: 'edit',
@@ -819,7 +819,7 @@ var ChapterClass = /*#__PURE__*/function () {
         });
         $chapter_delete_button.on('click', function () {
           if (window.confirm("Chapter is about to be removed. Do you confirm ?")) {
-            _learnServices.ApiService.update('learn\\Module', [_this.parent.id], {
+            _qursusServices.ApiService.update('qursus\\Module', [_this.parent.id], {
               'chapters_ids': [-_this.id]
             }, true);
             _this.parent.propagateContextChange({
@@ -1576,7 +1576,7 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
 var _Widget = __webpack_require__(/*! ./Widget.class */ "./build/Widget.class.js");
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
@@ -1703,7 +1703,7 @@ var GroupClass = /*#__PURE__*/function () {
         $actions.append($edit_button).append($add_button).append($move_up_button).append($move_down_button).append($delete_button);
         $edit_button.on('click', function () {
           window.eq.popup({
-            entity: 'learn\\Group',
+            entity: 'qursus\\Group',
             type: 'form',
             mode: 'edit',
             domain: ['id', '=', _this.id],
@@ -1737,7 +1737,7 @@ var GroupClass = /*#__PURE__*/function () {
         $add_button.on('click', function () {
           var widget_identifier = _this.widgets ? _this.widgets.length + 1 : 1;
           window.eq.popup({
-            entity: 'learn\\Widget',
+            entity: 'qursus\\Widget',
             type: 'form',
             name: 'create',
             mode: 'edit',
@@ -1783,7 +1783,7 @@ var GroupClass = /*#__PURE__*/function () {
         });
         $delete_button.on('click', function () {
           if (window.confirm("Group is about to be removed. Do you confirm ?")) {
-            _learnServices.ApiService.delete('learn\\Group', [_this.id], true);
+            _qursusServices.ApiService.delete('qursus\\Group', [_this.id], true);
             _this.parent.propagateContextChange({
               '$leaf.remove_group': _this.id,
               refresh: true
@@ -1913,7 +1913,7 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
 var _Group = __webpack_require__(/*! ./Group.class */ "./build/Group.class.js");
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 var _Section = _interopRequireDefault(__webpack_require__(/*! ./Section.class */ "./build/Section.class.js"));
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2240,7 +2240,7 @@ var LeafClass = /*#__PURE__*/function () {
         var $edit_button = (0, _jqueryLib.$)('<div class="action-button leaf-edit-button" title="Edit Leaf"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
         $edit_button.on('click', function () {
           window.eq.popup({
-            entity: 'learn\\Leaf',
+            entity: 'qursus\\Leaf',
             type: 'form',
             mode: 'edit',
             domain: ['id', '=', _this.id],
@@ -2276,7 +2276,7 @@ var LeafClass = /*#__PURE__*/function () {
         $add_button.on('click', function () {
           var group_identifier = _this.groups ? _this.groups.length + 1 : 1;
           window.eq.popup({
-            entity: 'learn\\Group',
+            entity: 'qursus\\Group',
             type: 'form',
             name: 'create',
             mode: 'edit',
@@ -2311,7 +2311,7 @@ var LeafClass = /*#__PURE__*/function () {
         var $delete_button = (0, _jqueryLib.$)('<div class="action-button leaf-delete-button" title="Delete Leaf"><span class="material-icons mdc-fab__icon">delete</span></div>');
         $delete_button.on('click', function () {
           if (window.confirm("Leaf is about to be removed. Do you confirm ?")) {
-            _learnServices.ApiService.delete('learn\\Leaf', [_this.id], true);
+            _qursusServices.ApiService.delete('qursus\\Leaf', [_this.id], true);
             _this.parent.propagateContextChange({
               '$page.remove_leaf': _this.id,
               refresh: true
@@ -2381,10 +2381,10 @@ var LeafClass = /*#__PURE__*/function () {
                 var temp = this.groups[group_index - 1];
                 this.groups[group_index - 1] = this.groups[group_index];
                 this.groups[group_index] = temp;
-                _learnServices.ApiService.update('learn\\Group', [this.groups[group_index - 1].id], {
+                _qursusServices.ApiService.update('qursus\\Group', [this.groups[group_index - 1].id], {
                   'order': this.groups[group_index].order
                 }, true);
-                _learnServices.ApiService.update('learn\\Group', [this.groups[group_index].id], {
+                _qursusServices.ApiService.update('qursus\\Group', [this.groups[group_index].id], {
                   'order': this.groups[group_index - 1].order
                 }, true);
               }
@@ -2411,10 +2411,10 @@ var LeafClass = /*#__PURE__*/function () {
                 var _temp = this.groups[_group_index + 1];
                 this.groups[_group_index + 1] = this.groups[_group_index];
                 this.groups[_group_index] = _temp;
-                _learnServices.ApiService.update('learn\\Group', [this.groups[_group_index + 1].id], {
+                _qursusServices.ApiService.update('qursus\\Group', [this.groups[_group_index + 1].id], {
                   'order': this.groups[_group_index].order
                 }, true);
-                _learnServices.ApiService.update('learn\\Group', [this.groups[_group_index].id], {
+                _qursusServices.ApiService.update('qursus\\Group', [this.groups[_group_index].id], {
                   'order': this.groups[_group_index + 1].order
                 }, true);
               }
@@ -2500,7 +2500,7 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 var _Chapter = __webpack_require__(/*! ./Chapter.class */ "./build/Chapter.class.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2633,7 +2633,7 @@ var ModuleClass = /*#__PURE__*/function () {
 
         // notify 'next' action
         if (_this.context.mode == 'view') {
-          _learnServices.ApiService.fetch('/?do=learn_next', {
+          _qursusServices.ApiService.fetch('/?do=qursus_next', {
             module_id: _this.id,
             chapter_index: _this.context.chapter_index,
             page_index: _this.context.page_index
@@ -2668,11 +2668,11 @@ var ModuleClass = /*#__PURE__*/function () {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.next = 2;
-                  return _learnServices.EnvService.getEnv();
+                  return _qursusServices.EnvService.getEnv();
                 case 2:
                   environment = _context.sent;
                   window.eq.popup({
-                    entity: 'learn\\Module',
+                    entity: 'qursus\\Module',
                     type: 'form',
                     mode: 'edit',
                     domain: ['id', '=', _this.id],
@@ -2715,7 +2715,7 @@ var ModuleClass = /*#__PURE__*/function () {
         $module_add_button.on('click', function () {
           var chapter_identifier = _this.chapters ? _this.chapters.length + 1 : 1;
           window.eq.popup({
-            entity: 'learn\\Chapter',
+            entity: 'qursus\\Chapter',
             type: 'form',
             mode: 'edit',
             purpose: 'create',
@@ -2969,7 +2969,7 @@ var _Section = __webpack_require__(/*! ./Section.class */ "./build/Section.class
 var _Leaf = __webpack_require__(/*! ./Leaf.class */ "./build/Leaf.class.js");
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
 var _Chapter = __webpack_require__(/*! ./Chapter.class */ "./build/Chapter.class.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
@@ -3141,7 +3141,7 @@ var PageClass = /*#__PURE__*/function () {
 
         $page_edit_button.on('click', function () {
           window.eq.popup({
-            entity: 'learn\\Page',
+            entity: 'qursus\\Page',
             type: 'form',
             mode: 'edit',
             domain: ['id', '=', _this.id],
@@ -3183,7 +3183,7 @@ var PageClass = /*#__PURE__*/function () {
         $page_add_button.on('click', function () {
           var leaf_identifier = _this.leaves ? _this.leaves.length + 1 : 1;
           window.eq.popup({
-            entity: 'learn\\Leaf',
+            entity: 'qursus\\Leaf',
             type: 'form',
             mode: 'edit',
             purpose: 'create',
@@ -3220,7 +3220,7 @@ var PageClass = /*#__PURE__*/function () {
         });
         $page_add_sect_button.on('click', function () {
           window.eq.popup({
-            entity: 'learn\\Section',
+            entity: 'qursus\\Section',
             type: 'form',
             name: 'create',
             mode: 'edit',
@@ -3259,7 +3259,7 @@ var PageClass = /*#__PURE__*/function () {
           if (window.confirm("Page is about to be removed. Do you confirm ?")) {
             _this.parent.getParent().getContainer().find('.controls.page-controls').remove();
             if (_this.parent instanceof _Chapter.ChapterClass) {
-              _learnServices.ApiService.update('learn\\Chapter', [_this.parent.id], {
+              _qursusServices.ApiService.update('qursus\\Chapter', [_this.parent.id], {
                 'pages_ids': [-_this.id]
               }, true);
               _this.parent.propagateContextChange({
@@ -3267,7 +3267,7 @@ var PageClass = /*#__PURE__*/function () {
                 refresh: true
               });
             } else if (_this.parent instanceof _Section.SectionClass) {
-              _learnServices.ApiService.update('learn\\Section', [_this.parent.id], {
+              _qursusServices.ApiService.update('qursus\\Section', [_this.parent.id], {
                 'pages_ids': [-_this.id]
               }, true);
               _this.parent.propagateContextChange({
@@ -3455,212 +3455,6 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ "./build/Learn.js":
-/*!*************************!*\
-  !*** ./build/Learn.js ***!
-  \*************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
-var _Module = __webpack_require__(/*! ./Module.class */ "./build/Module.class.js");
-var _Pack = __webpack_require__(/*! ./Pack.class */ "./build/Pack.class.js");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-/**
- *
- *
- */
-var Learn = /*#__PURE__*/function () {
-  function Learn() {
-    (0, _classCallCheck2.default)(this, Learn);
-    (0, _defineProperty2.default)(this, "module", void 0);
-    (0, _defineProperty2.default)(this, "pack", void 0);
-    (0, _defineProperty2.default)(this, "languages", ['en']);
-    console.log("Learn::constructor");
-    this.onload();
-  }
-  (0, _createClass2.default)(Learn, [{
-    key: "onload",
-    value: function () {
-      var _onload = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var environment;
-        return _regenerator.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return _learnServices.EnvService.getEnv();
-              case 2:
-                environment = _context.sent;
-                _context.next = 5;
-                return _jqueryLib.$.getJSON("environment.json", function (json) {
-                  console.log("found environment file", json);
-                  for (var field in json) {
-                    if (environment.hasOwnProperty(field)) {
-                      environment[field] = json[field];
-                    }
-                  }
-                  console.log(environment);
-                }).fail(function (response) {
-                  console.log("no environment file found");
-                });
-              case 5:
-                this.init();
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-      function onload() {
-        return _onload.apply(this, arguments);
-      }
-      return onload;
-    }()
-  }, {
-    key: "init",
-    value: function () {
-      var _init = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
-        var _this = this;
-        var environment, _environment;
-        return _regenerator.default.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return _learnServices.EnvService.getEnv();
-              case 2:
-                environment = _context2.sent;
-                if (_learnServices.ContextService.user_allowed) {
-                  _context2.next = 8;
-                  break;
-                }
-                (0, _jqueryLib.$)('.spinner-wrapper').hide();
-                (0, _jqueryLib.$)('.access-restricted').show();
-                _context2.next = 12;
-                break;
-              case 8:
-                _context2.next = 10;
-                return _learnServices.EnvService.getEnv();
-              case 10:
-                _environment = _context2.sent;
-                _jqueryLib.$.getJSON(_environment.backend_url + "?get=learn_module&id=" + _learnServices.ContextService.module_id + '&lang=' + _environment.lang, function (json) {
-                  _this.pack = new _Pack.PackClass(json.pack_id.id, json.pack_id.name, json.pack_id.subtitle, json.pack_id.title, json.pack_id.description);
-                  _this.module = new _Module.ModuleClass(json.id, json.identifier, json.order, json.name, json.title, json.description, json.duration, json.chapters);
-                  if (json.pack_id && json.pack_id.langs_ids) {
-                    _this.languages = json.pack_id.langs_ids;
-                  }
-                  _this.module.setContext({
-                    chapter_index: _learnServices.ContextService.chapter_index,
-                    page_index: _learnServices.ContextService.page_index,
-                    mode: _learnServices.ContextService.mode
-                  });
-                  _this.module.init();
-                  (0, _jqueryLib.$)('.spinner-wrapper').hide();
-                  (0, _jqueryLib.$)('body').addClass(_learnServices.ContextService.mode);
-                  (0, _jqueryLib.$)('.menu-top').find('.cell-program').text(_this.pack.title);
-                  (0, _jqueryLib.$)('.menu-top').find('.cell-module').text('Module ' + _this.module.identifier);
-                  _this.module.render();
-                  (0, _jqueryLib.$)('.menu-top .inner .left-cell a').attr('href', '/product/' + _this.pack.name);
-                  var $lang_select = (0, _jqueryLib.$)('<select>').on('change', function (event) {
-                    return _this.onchangeLang(event);
-                  });
-                  var _iterator = _createForOfIteratorHelper(_this.languages),
-                    _step;
-                  try {
-                    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                      var lang = _step.value;
-                      var $option = (0, _jqueryLib.$)('<option>').attr('value', lang.code).text(lang.name).appendTo($lang_select);
-                      if (lang.code == _environment.lang) {
-                        $option.attr('selected', 'selected');
-                        $lang_select.val(lang.code);
-                      }
-                    }
-                  } catch (err) {
-                    _iterator.e(err);
-                  } finally {
-                    _iterator.f();
-                  }
-                  (0, _jqueryLib.$)('.menu-top .middle-cell').empty().append($lang_select);
-                }).fail(function (response) {
-                  console.log('unexpected error', response);
-                  var error_id = 'unknown_error';
-                  if (response.responseJSON && response.responseJSON.errors) {
-                    if (response.responseJSON.errors.NOT_ALLOWED) {
-                      error_id = response.responseJSON.errors.NOT_ALLOWED;
-                    } else if (response.responseJSON.errors.UNKNOWN_ERROR) {
-                      error_id = response.responseJSON.errors.UNKNOWN_ERROR;
-                    }
-                  }
-                  switch (error_id) {
-                    case 'missing_licence':
-                      (0, _jqueryLib.$)('.missing-license').show();
-                      break;
-                    case 'unknown_user':
-                      (0, _jqueryLib.$)('.access-restricted').show();
-                      break;
-                    default:
-                      (0, _jqueryLib.$)('.unknown-error').show();
-                  }
-                  (0, _jqueryLib.$)('.spinner-wrapper').hide();
-                });
-              case 12:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-      function init() {
-        return _init.apply(this, arguments);
-      }
-      return init;
-    }()
-  }, {
-    key: "setContext",
-    value: function setContext(context) {
-      this.module.setContext(context);
-    }
-  }, {
-    key: "onchangeLang",
-    value: function onchangeLang(event) {
-      var $select = (0, _jqueryLib.$)(event.target);
-      var lang = $select.val();
-
-      // update env lang
-      _learnServices.EnvService.setEnv('lang', lang);
-
-      // reset  everything
-      (0, _jqueryLib.$)('.viewport-container').remove();
-      (0, _jqueryLib.$)('.spinner-wrapper').show();
-
-      // module
-      this.init();
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      this.module.render();
-    }
-  }]);
-  return Learn;
-}();
-module.exports = Learn;
-
-/***/ }),
-
 /***/ "./build/Section.class.js":
 /*!********************************!*\
   !*** ./build/Section.class.js ***!
@@ -3680,7 +3474,7 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtim
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
 var _Page = __webpack_require__(/*! ./Page.class */ "./build/Page.class.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
@@ -3791,7 +3585,7 @@ var SectionClass = /*#__PURE__*/function () {
         $section_controls.appendTo(_$container);
         $edit_button.on('click', function () {
           window.eq.popup({
-            entity: 'learn\\Section',
+            entity: 'qursus\\Section',
             type: 'form',
             mode: 'edit',
             domain: ['id', '=', _this.id],
@@ -3826,7 +3620,7 @@ var SectionClass = /*#__PURE__*/function () {
         $add_button.on('click', function () {
           var page_identifier = _this.pages ? _this.pages.length + 1 : 1;
           window.eq.popup({
-            entity: 'learn\\Page',
+            entity: 'qursus\\Page',
             type: 'form',
             mode: 'edit',
             purpose: 'create',
@@ -3860,7 +3654,7 @@ var SectionClass = /*#__PURE__*/function () {
         });
         $delete_button.on('click', function () {
           if (window.confirm("Section is about to be removed. Do you confirm ?")) {
-            _learnServices.ApiService.delete('learn\\Section', [_this.id], true);
+            _qursusServices.ApiService.delete('qursus\\Section', [_this.id], true);
             (0, _jqueryLib.$)('body').find('.section-page-container.section-id_' + _this.id).remove();
             _this.parent.propagateContextChange({
               '$page.remove_section': _this.id,
@@ -4015,7 +3809,7 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
 var _TextRenderer = __webpack_require__(/*! ./TextRenderer.class */ "./build/TextRenderer.class.js");
-var _learnServices = __webpack_require__(/*! ./learn-services */ "./build/learn-services.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
@@ -4100,7 +3894,7 @@ var WidgetClass = /*#__PURE__*/function () {
         case 'code':
           // normalize code : remove html layout
           content = (0, _jqueryLib.$)(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text();
-          // identify target lang
+          // identitfy target lang
           var target_lang = 'javascript';
           var clues = {
             'php': ['```php'],
@@ -4233,7 +4027,7 @@ var WidgetClass = /*#__PURE__*/function () {
             }
             break;
           case 'image_full()':
-            if (['image_popup', 'selector_popup'].indexOf(this.type) > -1 && this.image_url && this.image_url.length) {
+            if (['image_popup', 'selector_popup'].includes(this.type) && this.image_url && this.image_url.length) {
               this.$container.on('click', function () {
                 if (_this.type == 'selector_popup') {
                   _this.$container.addClass('previously_selected');
@@ -4303,11 +4097,11 @@ var WidgetClass = /*#__PURE__*/function () {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.next = 2;
-                  return _learnServices.EnvService.getEnv();
+                  return _qursusServices.EnvService.getEnv();
                 case 2:
                   environment = _context.sent;
                   window.eq.popup({
-                    entity: 'learn\\Widget',
+                    entity: 'qursus\\Widget',
                     type: 'form',
                     mode: 'edit',
                     domain: ['id', '=', _this.id],
@@ -4349,7 +4143,7 @@ var WidgetClass = /*#__PURE__*/function () {
         })));
         $delete_button.on('click', function () {
           if (window.confirm("Widget is about to be removed. Do you confirm ?")) {
-            _learnServices.ApiService.delete('learn\\Widget', [_this.id], true);
+            _qursusServices.ApiService.delete('qursus\\Widget', [_this.id], true);
             _this.parent.propagateContextChange({
               '$group.remove_widget': _this.id,
               refresh: true
@@ -4419,9 +4213,9 @@ var _jquery = _interopRequireDefault(__webpack_require__(/*! jquery */ "./node_m
 
 /***/ }),
 
-/***/ "./build/learn-services.js":
+/***/ "./build/qursus-services.js":
 /*!**********************************!*\
-  !*** ./build/learn-services.js ***!
+  !*** ./build/qursus-services.js ***!
   \**********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -4445,6 +4239,212 @@ var EnvService = new _EnvService2.default();
 exports.EnvService = EnvService;
 var ContextService = new _ContextService2.default();
 exports.ContextService = ContextService;
+
+/***/ }),
+
+/***/ "./build/qursus.js":
+/*!*************************!*\
+  !*** ./build/qursus.js ***!
+  \*************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
+var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
+var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
+var _Module = __webpack_require__(/*! ./Module.class */ "./build/Module.class.js");
+var _Pack = __webpack_require__(/*! ./Pack.class */ "./build/Pack.class.js");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+/**
+ *
+ *
+ */
+var Qursus = /*#__PURE__*/function () {
+  function Qursus() {
+    (0, _classCallCheck2.default)(this, Qursus);
+    (0, _defineProperty2.default)(this, "module", void 0);
+    (0, _defineProperty2.default)(this, "pack", void 0);
+    (0, _defineProperty2.default)(this, "languages", ['en']);
+    console.log("Qursus::constructor");
+    this.onload();
+  }
+  (0, _createClass2.default)(Qursus, [{
+    key: "onload",
+    value: function () {
+      var _onload = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+        var environment;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _qursusServices.EnvService.getEnv();
+              case 2:
+                environment = _context.sent;
+                _context.next = 5;
+                return _jqueryLib.$.getJSON("environment.json", function (json) {
+                  console.log("found environment file", json);
+                  for (var field in json) {
+                    if (environment.hasOwnProperty(field)) {
+                      environment[field] = json[field];
+                    }
+                  }
+                  console.log(environment);
+                }).fail(function (response) {
+                  console.log("no environment file found");
+                });
+              case 5:
+                this.init();
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+      function onload() {
+        return _onload.apply(this, arguments);
+      }
+      return onload;
+    }()
+  }, {
+    key: "init",
+    value: function () {
+      var _init = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
+        var _this = this;
+        var environment, _environment;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _qursusServices.EnvService.getEnv();
+              case 2:
+                environment = _context2.sent;
+                if (_qursusServices.ContextService.user_allowed) {
+                  _context2.next = 8;
+                  break;
+                }
+                (0, _jqueryLib.$)('.spinner-wrapper').hide();
+                (0, _jqueryLib.$)('.access-restricted').show();
+                _context2.next = 12;
+                break;
+              case 8:
+                _context2.next = 10;
+                return _qursusServices.EnvService.getEnv();
+              case 10:
+                _environment = _context2.sent;
+                _jqueryLib.$.getJSON(_environment.backend_url + "?get=qursus_module&id=" + _qursusServices.ContextService.module_id + '&lang=' + _environment.lang, function (json) {
+                  _this.pack = new _Pack.PackClass(json.pack_id.id, json.pack_id.name, json.pack_id.subtitle, json.pack_id.title, json.pack_id.description);
+                  _this.module = new _Module.ModuleClass(json.id, json.identifier, json.order, json.name, json.title, json.description, json.duration, json.chapters);
+                  if (json.pack_id && json.pack_id.langs_ids) {
+                    _this.languages = json.pack_id.langs_ids;
+                  }
+                  _this.module.setContext({
+                    chapter_index: _qursusServices.ContextService.chapter_index,
+                    page_index: _qursusServices.ContextService.page_index,
+                    mode: _qursusServices.ContextService.mode
+                  });
+                  _this.module.init();
+                  (0, _jqueryLib.$)('.spinner-wrapper').hide();
+                  (0, _jqueryLib.$)('body').addClass(_qursusServices.ContextService.mode);
+                  (0, _jqueryLib.$)('.menu-top').find('.cell-program').text(_this.pack.title);
+                  (0, _jqueryLib.$)('.menu-top').find('.cell-module').text('Module ' + _this.module.identifier);
+                  _this.module.render();
+                  (0, _jqueryLib.$)('.menu-top .inner .left-cell a').attr('href', '/product/' + _this.pack.name);
+                  var $lang_select = (0, _jqueryLib.$)('<select>').on('change', function (event) {
+                    return _this.onchangeLang(event);
+                  });
+                  var _iterator = _createForOfIteratorHelper(_this.languages),
+                    _step;
+                  try {
+                    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                      var lang = _step.value;
+                      var $option = (0, _jqueryLib.$)('<option>').attr('value', lang.code).text(lang.name).appendTo($lang_select);
+                      if (lang.code == _environment.lang) {
+                        $option.attr('selected', 'selected');
+                        $lang_select.val(lang.code);
+                      }
+                    }
+                  } catch (err) {
+                    _iterator.e(err);
+                  } finally {
+                    _iterator.f();
+                  }
+                  (0, _jqueryLib.$)('.menu-top .middle-cell').empty().append($lang_select);
+                }).fail(function (response) {
+                  console.log('unexpected error', response);
+                  var error_id = 'unknown_error';
+                  if (response.responseJSON && response.responseJSON.errors) {
+                    if (response.responseJSON.errors.NOT_ALLOWED) {
+                      error_id = response.responseJSON.errors.NOT_ALLOWED;
+                    } else if (response.responseJSON.errors.UNKNOWN_ERROR) {
+                      error_id = response.responseJSON.errors.UNKNOWN_ERROR;
+                    }
+                  }
+                  switch (error_id) {
+                    case 'missing_licence':
+                      (0, _jqueryLib.$)('.missing-license').show();
+                      break;
+                    case 'unknown_user':
+                      (0, _jqueryLib.$)('.access-restricted').show();
+                      break;
+                    default:
+                      (0, _jqueryLib.$)('.unknown-error').show();
+                  }
+                  (0, _jqueryLib.$)('.spinner-wrapper').hide();
+                });
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+      function init() {
+        return _init.apply(this, arguments);
+      }
+      return init;
+    }()
+  }, {
+    key: "setContext",
+    value: function setContext(context) {
+      this.module.setContext(context);
+    }
+  }, {
+    key: "onchangeLang",
+    value: function onchangeLang(event) {
+      var $select = (0, _jqueryLib.$)(event.target);
+      var lang = $select.val();
+
+      // update env lang
+      _qursusServices.EnvService.setEnv('lang', lang);
+
+      // reset  everything
+      (0, _jqueryLib.$)('.viewport-container').remove();
+      (0, _jqueryLib.$)('.spinner-wrapper').show();
+
+      // module
+      this.init();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      this.module.render();
+    }
+  }]);
+  return Qursus;
+}();
+module.exports = Qursus;
 
 /***/ }),
 
@@ -16411,9 +16411,9 @@ try {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./build/Learn.js");
-/******/ 	Learn = __webpack_exports__;
+/******/ 	var __webpack_exports__ = __webpack_require__("./build/qursus.js");
+/******/ 	Qursus = __webpack_exports__;
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=learn.bundle.js.map
+//# sourceMappingURL=qursus.bundle.js.map

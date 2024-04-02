@@ -1,6 +1,6 @@
 import { $ } from "./jquery-lib";
 
-import { ApiService } from "./learn-services";
+import { ApiService } from "./qursus-services";
 
 
 /**

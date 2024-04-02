@@ -1,7 +1,7 @@
 import { $ } from "./jquery-lib";
 import { GroupClass } from "./Group.class";
 import { DomainClass } from "./Domain.class";
-import { ApiService } from "./learn-services";
+import { ApiService } from "./qursus-services";
 
 import PageClass from "./Page.class";
 import SectionClass from "./Section.class";
@@ -375,7 +375,7 @@ export class LeafClass {
 
             let $edit_button = $('<div class="action-button leaf-edit-button" title="Edit Leaf"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             $edit_button.on('click', () => {
-                window.eq.popup({entity: 'learn\\Leaf', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Leaf', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
                     if(data && data.objects) {
                         for(let object of data.objects) {
                             if(object.id != this.id) continue;
@@ -393,7 +393,7 @@ export class LeafClass {
             let $add_button = $('<div class="action-button leaf-add-button" title="Add a Group"><span class="material-icons mdc-fab__icon">add</span></div>');
             $add_button.on('click', () => {
                 let group_identifier = (this.groups)?this.groups.length+1:1;
-                window.eq.popup({entity: 'learn\\Group', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['leaf_id', '=', this.id], ['identifier', '=', group_identifier], ['order', '=', group_identifier]], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Group', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['leaf_id', '=', this.id], ['identifier', '=', group_identifier], ['order', '=', group_identifier]], callback: (data:any) => {
                     // append new page to chapter
                     if(data && data.objects) {
                         for(let item of data.objects) {
@@ -419,7 +419,7 @@ export class LeafClass {
             let $delete_button = $('<div class="action-button leaf-delete-button" title="Delete Leaf"><span class="material-icons mdc-fab__icon">delete</span></div>');
             $delete_button.on('click', () => {
                 if (window.confirm("Leaf is about to be removed. Do you confirm ?")) {
-                    ApiService.delete('learn\\Leaf', [this.id], true);
+                    ApiService.delete('qursus\\Leaf', [this.id], true);
                     this.parent.propagateContextChange({'$page.remove_leaf': this.id, refresh: true});
                 }
             });
@@ -470,8 +470,8 @@ export class LeafClass {
                             let temp = this.groups[group_index-1];
                             this.groups[group_index-1] = this.groups[group_index];
                             this.groups[group_index] = temp;
-                            ApiService.update('learn\\Group', [this.groups[group_index-1].id], {'order': this.groups[group_index].order}, true);
-                            ApiService.update('learn\\Group', [this.groups[group_index].id], {'order': this.groups[group_index-1].order}, true);
+                            ApiService.update('qursus\\Group', [this.groups[group_index-1].id], {'order': this.groups[group_index].order}, true);
+                            ApiService.update('qursus\\Group', [this.groups[group_index].id], {'order': this.groups[group_index-1].order}, true);
                         }
                     }
                     else if(parts[1] == 'move_group_down' && this.groups && this.groups.length) {
@@ -486,8 +486,8 @@ export class LeafClass {
                             let temp = this.groups[group_index+1];
                             this.groups[group_index+1] = this.groups[group_index];
                             this.groups[group_index] = temp;
-                            ApiService.update('learn\\Group', [this.groups[group_index+1].id], {'order': this.groups[group_index].order}, true);
-                            ApiService.update('learn\\Group', [this.groups[group_index].id], {'order': this.groups[group_index+1].order}, true);
+                            ApiService.update('qursus\\Group', [this.groups[group_index+1].id], {'order': this.groups[group_index].order}, true);
+                            ApiService.update('qursus\\Group', [this.groups[group_index].id], {'order': this.groups[group_index+1].order}, true);
                         }
                     }
                     else {

@@ -1,7 +1,7 @@
 import { $ } from "./jquery-lib";
 import { DomainClass } from "./Domain.class";
 import { TextRendererClass } from "./TextRenderer.class";
-import { EnvService, ApiService } from "./learn-services";
+import { EnvService, ApiService } from "./qursus-services";
 import GroupClass from "./Group.class";
 
 
@@ -145,7 +145,7 @@ export class WidgetClass {
             case 'code':
                 // normalize code : remove html layout
                 content = $(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text();
-                // identify target lang
+                // identitfy target lang
                 let target_lang = 'javascript';
                 let clues:any = {
                     'php': ['```php'],
@@ -266,7 +266,7 @@ export class WidgetClass {
                     }
                     break;
                 case 'image_full()':
-                    if(['image_popup', 'selector_popup'].indexOf(this.type) > -1 && this.image_url && this.image_url.length) {
+                    if(['image_popup', 'selector_popup'].includes(this.type) && this.image_url && this.image_url.length) {
                         this.$container.on('click', () => {
                             if(this.type == 'selector_popup') {
                                 this.$container.addClass('previously_selected');
@@ -337,7 +337,7 @@ export class WidgetClass {
 
             $edit_button.on('click', async () => {
                 const environment = await EnvService.getEnv();
-                window.eq.popup({entity: 'learn\\Widget', type: 'form', mode: 'edit', domain: ['id', '=', this.id], lang: environment.lang, callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Widget', type: 'form', mode: 'edit', domain: ['id', '=', this.id], lang: environment.lang, callback: (data:any) => {
                     if(data && data.objects) {
                         for(let object of data.objects) {
                             if(object.id != this.id) continue;
@@ -357,7 +357,7 @@ export class WidgetClass {
 
             $delete_button.on('click', () => {
                 if (window.confirm("Widget is about to be removed. Do you confirm ?")) {
-                    ApiService.delete('learn\\Widget', [this.id], true);
+                    ApiService.delete('qursus\\Widget', [this.id], true);
                     this.parent.propagateContextChange({'$group.remove_widget': this.id, refresh: true});
                 }
             });

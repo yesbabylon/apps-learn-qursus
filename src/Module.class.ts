@@ -1,6 +1,6 @@
 import { $ } from "./jquery-lib";
 
-import { ApiService, ContextService, EnvService } from "./learn-services";
+import { ApiService, ContextService, EnvService } from "./qursus-services";
 
 import { ChapterClass } from "./Chapter.class";
 
@@ -161,7 +161,7 @@ export class ModuleClass {
 
             // notify 'next' action
             if(this.context.mode == 'view') {                
-                ApiService.fetch('/?do=learn_next', { module_id: this.id, chapter_index: this.context.chapter_index, page_index: this.context.page_index});
+                ApiService.fetch('/?do=qursus_next', { module_id: this.id, chapter_index: this.context.chapter_index, page_index: this.context.page_index});
             }
 
         });
@@ -191,7 +191,7 @@ export class ModuleClass {
 
             $module_edit_button.on('click', async () => {
                 const environment = await EnvService.getEnv();
-                window.eq.popup({entity: 'learn\\Module', type: 'form', mode: 'edit', domain: ['id', '=', this.id], lang: environment.lang, callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Module', type: 'form', mode: 'edit', domain: ['id', '=', this.id], lang: environment.lang, callback: (data:any) => {
                     if(data && data.objects) {
                         for(let object of data.objects) {
                             if(object.id != this.id) continue;
@@ -210,7 +210,7 @@ export class ModuleClass {
 
             $module_add_button.on('click', () => {
                 let chapter_identifier = (this.chapters)?this.chapters.length+1:1;
-                window.eq.popup({entity: 'learn\\Chapter', type: 'form', mode: 'edit', purpose: 'create', domain: [['module_id', '=', this.id], ['identifier', '=', chapter_identifier], ['order', '=', chapter_identifier]], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Chapter', type: 'form', mode: 'edit', purpose: 'create', domain: [['module_id', '=', this.id], ['identifier', '=', chapter_identifier], ['order', '=', chapter_identifier]], callback: (data:any) => {
                     // append new chapter to module
                     if(data && data.objects) {
                         for(let item of data.objects) {

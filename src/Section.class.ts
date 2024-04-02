@@ -1,6 +1,6 @@
 import { $ } from "./jquery-lib";
 import { PageClass } from "./Page.class";
-import { ApiService } from "./learn-services";
+import { ApiService } from "./qursus-services";
 
 
 /**
@@ -138,7 +138,7 @@ export class SectionClass {
              $section_controls.appendTo($container);
 
              $edit_button.on('click', () => {
-                window.eq.popup({entity: 'learn\\Section', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Section', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
                     if(data && data.objects) {
                         for(let object of data.objects) {
                             if(object.id != this.id) continue;
@@ -156,7 +156,7 @@ export class SectionClass {
 
             $add_button.on('click', () => {
                 let page_identifier = (this.pages)?this.pages.length+1:1;
-                window.eq.popup({entity: 'learn\\Page', type: 'form', mode: 'edit', purpose: 'create', domain: [['section_id', '=', this.id], ['identifier', '=', page_identifier], ['order', '=', page_identifier]], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Page', type: 'form', mode: 'edit', purpose: 'create', domain: [['section_id', '=', this.id], ['identifier', '=', page_identifier], ['order', '=', page_identifier]], callback: (data:any) => {
                     // append new page to section
                     if(data && data.objects) {
                         for(let item of data.objects) {
@@ -183,7 +183,7 @@ export class SectionClass {
 
             $delete_button.on('click', () => {
                 if (window.confirm("Section is about to be removed. Do you confirm ?")) {
-                    ApiService.delete('learn\\Section', [this.id], true);
+                    ApiService.delete('qursus\\Section', [this.id], true);
                     $('body').find('.section-page-container.section-id_'+this.id).remove();
                     this.parent.propagateContextChange({'$page.remove_section': this.id, refresh: true});
                 }

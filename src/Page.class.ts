@@ -3,7 +3,7 @@ import { SectionClass } from "./Section.class";
 import { LeafClass } from "./Leaf.class";
 import { DomainClass } from "./Domain.class";
 import { ChapterClass } from "./Chapter.class";
-import { ApiService } from "./learn-services";
+import { ApiService } from "./qursus-services";
 
 
 /**
@@ -204,7 +204,7 @@ export class PageClass {
             */
 
              $page_edit_button.on('click', () => {
-                window.eq.popup({entity: 'learn\\Page', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Page', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
                     if(data && data.objects) {
                         for(let object of data.objects) {
                             if(object.id != this.id) continue;
@@ -228,7 +228,7 @@ export class PageClass {
 
             $page_add_button.on('click', () => {
                 let leaf_identifier = (this.leaves)?this.leaves.length+1:1;
-                window.eq.popup({entity: 'learn\\Leaf', type: 'form', mode: 'edit', purpose: 'create', domain: [['page_id', '=', this.id], ['identifier', '=', leaf_identifier], ['order', '=', leaf_identifier]], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Leaf', type: 'form', mode: 'edit', purpose: 'create', domain: [['page_id', '=', this.id], ['identifier', '=', leaf_identifier], ['order', '=', leaf_identifier]], callback: (data:any) => {
                     // append new page to chapter
                     if(data && data.objects) {
                         for(let item of data.objects) {
@@ -259,7 +259,7 @@ export class PageClass {
             });
 
             $page_add_sect_button.on('click', () => {
-                window.eq.popup({entity: 'learn\\Section', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['page_id', '=', this.id], ['identifier', '=', this.sections.length+1]], callback: (data:any) => {
+                window.eq.popup({entity: 'qursus\\Section', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['page_id', '=', this.id], ['identifier', '=', this.sections.length+1]], callback: (data:any) => {
                     // append new page to chapter
                     if(data && data.objects) {
                         for(let item of data.objects) {
@@ -287,11 +287,11 @@ export class PageClass {
                     
                     this.parent.getParent().getContainer().find('.controls.page-controls').remove();
                     if(this.parent instanceof ChapterClass) {
-                        ApiService.update('learn\\Chapter', [this.parent.id], {'pages_ids': [-this.id]}, true);
+                        ApiService.update('qursus\\Chapter', [this.parent.id], {'pages_ids': [-this.id]}, true);
                         this.parent.propagateContextChange({'$chapter.remove_page': this.id, refresh: true});
                     }
                     else if(this.parent instanceof SectionClass) {
-                        ApiService.update('learn\\Section', [this.parent.id], {'pages_ids': [-this.id]}, true);                        
+                        ApiService.update('qursus\\Section', [this.parent.id], {'pages_ids': [-this.id]}, true);                        
                         this.parent.propagateContextChange({'$section.remove_page': this.id, refresh: true});
                     }
                 }
