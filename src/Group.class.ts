@@ -22,7 +22,7 @@ export class GroupClass {
     public widgets: WidgetClass[];
     public visible: [];
 
-    private $container;
+    private readonly $container: JQuery;
 
     private parent: LeafClass = null;
 
@@ -100,7 +100,7 @@ export class GroupClass {
         group_classes += ' row_span'+row_span;
         group_classes += ' '+direction;
 
-        // handle horizontal widget layouts (depending on the amount of widgets)
+        // handle horizontal widget layouts (depending on the number of widgets)
         if(direction == 'horizontal' && this.widgets) {
             if(this.widgets.length >= 3) {
                 if(this.widgets.length <= 4) {
@@ -128,7 +128,6 @@ export class GroupClass {
                 item.has_separator_right,
                 item.align,
                 item.on_click,
-                item.section_id,
                 item.content,
                 item.sound_url,
                 item.video_url,
@@ -158,7 +157,7 @@ export class GroupClass {
             $actions.append($edit_button).append($add_button).append($move_up_button).append($move_down_button).append($delete_button);
 
             $edit_button.on('click', () => {
-                window.eq.popup({entity: 'qursus\\Group', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
+                window.eq.popup({entity: 'learn\\Group', type: 'form', mode: 'edit', domain: ['id', '=', this.id], callback: (data:any) => {
                     if(data && data.objects) {
                         for(let object of data.objects) {
                             if(object.id != this.id) continue;
@@ -175,7 +174,7 @@ export class GroupClass {
 
             $add_button.on('click', () => {
                 let widget_identifier = (this.widgets)?this.widgets.length+1:1;
-                window.eq.popup({entity: 'qursus\\Widget', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['group_id', '=', this.id], ['identifier', '=', widget_identifier], ['order', '=', widget_identifier]], callback: (data:any) => {
+                window.eq.popup({entity: 'learn\\Widget', type: 'form', name: 'create', mode: 'edit', purpose: 'create', domain: [['group_id', '=', this.id], ['identifier', '=', widget_identifier], ['order', '=', widget_identifier]], callback: (data:any) => {
                     // append new widget to group
                     if(data && data.objects) {
                         for(let item of data.objects) {
@@ -188,7 +187,6 @@ export class GroupClass {
                                 item.has_separator_right,
                                 item.align,
                                 item.on_click,
-                                item.section_id,
                                 item.content,
                                 item.sound_url,
                                 item.video_url,
@@ -214,7 +212,7 @@ export class GroupClass {
 
             $delete_button.on('click', () => {
                 if (window.confirm("Group is about to be removed. Do you confirm ?")) {
-                    ApiService.delete('qursus\\Group', [this.id], true);
+                    ApiService.delete('learn\\Group', [this.id], true);
                     this.parent.propagateContextChange({'$leaf.remove_group': this.id, refresh: true});
                 }
             });

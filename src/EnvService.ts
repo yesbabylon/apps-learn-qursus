@@ -10,7 +10,7 @@ export class _EnvService {
         production:     false,
         parent_domain:  'equal.local',
         backend_url:    'http://equal.local',
-        rest_api_url:   'http://equal.local/v1',
+        rest_api_url:   'http://equal.local/',
         lang:           'en',
         locale:         'en'
     };
@@ -23,26 +23,17 @@ export class _EnvService {
      */
     public getEnv() {
         if(!this.promise) {
-            this.promise = new Promise( async (resolve, reject) => {
+            this.promise = new Promise( async (resolve) => {
                 try {
-                    const response:Response = await fetch('/assets/env/config.json');
+                    const response:Response = await fetch(this.default.backend_url + '/envinfo');
                     const env = await response.json();
                     this.assignEnv({...this.default, ...env});
                     resolve(this.environment);
                 }
                 catch(response) {
-                    // config.json not found, fallback to default.json
-                    try {
-                        const response:Response = await fetch('/assets/env/default.json');
-                        const env = await response.json();
-                        this.assignEnv({...this.default, ...env});
-                        resolve(this.environment);
-                    }
-                    catch(response) {
                         // default.json not found, fallback to default values
                         this.assignEnv({...this.default});
                         resolve(this.environment);
-                    }
                 }
             });
         }
@@ -50,7 +41,7 @@ export class _EnvService {
     }
 
     /**
-     * Assign and adapter to support older version of the URL syntax
+     * Assign and adapter to support an older version of the URL syntax
      */
     private assignEnv(environment: any) {
         if(environment.hasOwnProperty('backend_url')) {

@@ -1,4 +1,3 @@
-import { $ } from "./jquery-lib";
 
 export class _ContextService {
 
