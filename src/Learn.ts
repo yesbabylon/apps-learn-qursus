@@ -48,7 +48,6 @@ class Learn {
     }
 
     private async init() {
-        const environment = await EnvService.getEnv();
         // unknown user
         if (!ContextService.user_allowed) {
             $('.spinner-wrapper').hide();

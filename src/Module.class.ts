@@ -161,7 +161,7 @@ export class ModuleClass {
 
             // notify 'next' action
             if(this.context.mode == 'view') {                
-                ApiService.fetch('/?do=learn_next', { module_id: this.id, chapter_index: this.context.chapter_index, page_index: this.context.page_index});
+                ApiService.fetch('?do=learn_next', { module_id: this.id, chapter_index: this.context.chapter_index, page_index: this.context.page_index});
             }
 
         });

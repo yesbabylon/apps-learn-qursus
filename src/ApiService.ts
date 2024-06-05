@@ -46,7 +46,7 @@ export class _ApiService {
         try {
             const environment = await EnvService.getEnv();
             result = await $.get({
-                url: environment.rest_api_url + '/userinfo'
+                url: environment.rest_api_url + '/?get=core_userinfo'
             });
         } catch (response: any) {
             throw response.responseJSON;
