@@ -176,7 +176,6 @@ export class ModuleClass {
             /*
              append controls to module container
             */
-
             let $module_controls = $('<div class="controls module-controls"><div class="label">Module '+this.identifier+'</div></div>');
             let $module_actions = $('<div class="actions module-actions"></div>');
             let $module_edit_button = $('<div class="action-button module-edit-button" title="Edit Module"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
@@ -188,7 +187,6 @@ export class ModuleClass {
             /*
              setup action handlers
             */
-
             $module_edit_button.on('click', async () => {
                 const environment = await EnvService.getEnv();
                 window.eq.popup({entity: 'learn\\Module', type: 'form', mode: 'edit', domain: ['id', '=', this.id], lang: environment.lang, callback: (data:any) => {

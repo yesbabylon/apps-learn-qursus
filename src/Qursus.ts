@@ -40,7 +40,7 @@ class Qursus {
             }
             console.log(environment);
         })
-            .fail((response: any) => {
+            .fail((response: any): void => {
                 console.log("no environment file found");
             });
 
@@ -116,7 +116,6 @@ class Qursus {
                     $('.spinner-wrapper').hide();
                 });
         }
-
     }
 
     public setContext(context: any) {
@@ -142,7 +141,6 @@ class Qursus {
     public render() {
         this.module.render();
     }
-
 }
 
 module.exports = Qursus;

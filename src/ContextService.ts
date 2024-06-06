@@ -1,4 +1,5 @@
 
+// Todo: AlexisVS: Script poisoned by WordPress options
 export class _ContextService {
 
     public module_id: number = 1;           // module identifier (id field)
@@ -11,7 +12,7 @@ export class _ContextService {
 
     constructor() {
 
-        let wp_user_id = this.getCookieValue('wp_lms_user');
+        // let wp_user_id = this.getCookieValue('wp_lms_user');
         /*
         if(wp_user_id === undefined) {
             // prevent running app
@@ -28,7 +29,10 @@ export class _ContextService {
 
         if(urlParams.has('mode')) {
             // restrict edit mode to admin WP users (root, admin, author)
-            if(urlParams.get('mode') == 'edit' && ['1', '2', '3'].includes(wp_user_id)) {
+            if(
+                urlParams.get('mode') == 'edit'
+                // && ['1', '2', '3'].includes(wp_user_id)
+            ) {
                 this.mode = 'edit';
             }
         }
