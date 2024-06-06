@@ -26,7 +26,7 @@ export class ModuleClass {
     public duration: number;            // (duration estimate in minutes)
     public chapters: ChapterClass[];
 
-    private $container:JQuery;
+    private $container: JQuery;
 
     // module-specific context
     public context: any = {
@@ -84,30 +84,29 @@ export class ModuleClass {
 
         this.$container = $("<div class=\"module-container viewport-container\" />").append($("<div class=\"container-inner\" />")).appendTo('body');
 
-        let $prev = $('<div class="page-nav-prev page-nav"><i class="arrow material-icons" style="margin-left: -4px;">chevron_left</i></div>').on('click', () =>  {
+        let $prev = $('<div class="page-nav-prev page-nav"><i class="arrow material-icons" style="margin-left: -4px;">chevron_left</i></div>').on('click', () => {
 
             let chapter_context = this.chapters[this.context.chapter_index].getContext();
             let chapter_page_index = chapter_context.page_index;
 
             console.log('page-nav-prev::click', chapter_context);
             // previous page
-            if(chapter_page_index > 0) {
+            if (chapter_page_index > 0) {
                 $('body').find('.section-container').remove();
                 $('body').find('.section-page-container.viewport-container').remove();
                 $('body').find('.section-nav').hide();
 
-                this.context.page_index = chapter_page_index-1;
+                this.context.page_index = chapter_page_index - 1;
                 this.chapters[this.context.chapter_index].render(this.context);
-            }
-            else {
+            } else {
                 $('body').find('.section-container').remove();
                 $('body').find('.section-page-container.viewport-container').remove();
                 $('body').find('.section-nav').hide();
 
                 // previous chapter
-                if(this.context.chapter_index > 0) {
+                if (this.context.chapter_index > 0) {
                     --this.context.chapter_index;
-                    this.context.page_index = this.chapters[this.context.chapter_index].pages.length-1;
+                    this.context.page_index = this.chapters[this.context.chapter_index].pages.length - 1;
                     this.render();
                     this.onContextChange({});
                 }
@@ -115,44 +114,41 @@ export class ModuleClass {
 
         });
 
-        let $next = $('<div class="page-nav-next page-nav"><i class="arrow material-icons">chevron_right</i></div>').on('click', () =>  {
+        let $next = $('<div class="page-nav-next page-nav"><i class="arrow material-icons">chevron_right</i></div>').on('click', () => {
 
-            let chapter_context:any = this.chapters[this.context.chapter_index].getContext();
+            let chapter_context: any = this.chapters[this.context.chapter_index].getContext();
 
             console.log('page-nav-next::click', this.context, chapter_context, this.chapters[this.context.chapter_index].pages.length);
 
             // next page
-            if( (chapter_context.page_index+1) < this.chapters[this.context.chapter_index].pages.length) {
+            if ((chapter_context.page_index + 1) < this.chapters[this.context.chapter_index].pages.length) {
                 $('body').find('.section-container').remove();
                 $('body').find('.section-page-container.viewport-container').remove();
                 $('body').find('.section-nav').hide();
 
-                if( (chapter_context.page_index+1) < this.context.page_index || this.context.mode == 'edit') {
+                if ((chapter_context.page_index + 1) < this.context.page_index || this.context.mode == 'edit') {
                     this.context.next_active = true;
                     this.$container.find('.page-nav-next').show();
-                }
-                else {
+                } else {
                     // next_active depends on domain of current page 
                     this.context.next_active = false;
                     this.$container.find('.page-nav-next').hide();
 
                 }
-                this.context.page_index = chapter_context.page_index+1;
+                this.context.page_index = chapter_context.page_index + 1;
                 this.chapters[this.context.chapter_index].render(this.context);
-            }
-            else {
+            } else {
                 $('body').find('.section-container').remove();
                 $('body').find('.section-page-container.viewport-container').remove();
                 $('body').find('.section-nav').hide();
 
                 // next chapter
-                if( (this.context.chapter_index+1) < this.chapters.length) {
+                if ((this.context.chapter_index + 1) < this.chapters.length) {
                     ++this.context.chapter_index;
                     this.context.page_index = 0;
                     this.render();
                     this.onContextChange({});
-                }
-                else {
+                } else {
                     // no more pages: hide 'next' button
                     this.context.next_active = false;
                     this.$container.find('.page-nav-next').hide();
@@ -160,23 +156,26 @@ export class ModuleClass {
             }
 
             // notify 'next' action
-            if(this.context.mode == 'view') {                
-                ApiService.fetch('?do=learn_next', { module_id: this.id, chapter_index: this.context.chapter_index, page_index: this.context.page_index});
+            if (this.context.mode == 'view') {
+                ApiService.fetch('?do=learn_next', {
+                    module_id: this.id,
+                    chapter_index: this.context.chapter_index,
+                    page_index: this.context.page_index
+                });
             }
 
         });
 
 
-        if(this.context.mode == 'view') {
+        if (this.context.mode == 'view') {
             $next.hide();
-        }
-        else if(this.context.mode == 'edit') {
+        } else if (this.context.mode == 'edit') {
             $('body').css("overflow", "visible").css('background', '#636b7e');
 
             /*
              append controls to module container
             */
-            let $module_controls = $('<div class="controls module-controls"><div class="label">Module '+this.identifier+'</div></div>');
+            let $module_controls = $('<div class="controls module-controls"><div class="label">Module ' + this.identifier + '</div></div>');
             let $module_actions = $('<div class="actions module-actions"></div>');
             let $module_edit_button = $('<div class="action-button module-edit-button" title="Edit Module"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             let $module_add_button = $('<div class="action-button module-add-button" title="Add a Chapter"><span class="material-icons mdc-fab__icon">add</span></div>');
@@ -189,50 +188,64 @@ export class ModuleClass {
             */
             $module_edit_button.on('click', async () => {
                 const environment = await EnvService.getEnv();
-                window.eq.popup({entity: 'learn\\Module', type: 'form', mode: 'edit', domain: ['id', '=', this.id], lang: environment.lang, callback: (data:any) => {
-                    if(data && data.objects) {
-                        for(let object of data.objects) {
-                            if(object.id != this.id) continue;
-                            for(let field of Object.keys(this)) {
-                                if(object.hasOwnProperty(field)) {
-                                    this[field] = (this[field]) ? ((this[field].constructor)(object[field])) : object[field];
+                window.eq.popup({
+                    entity: 'learn\\Module',
+                    type: 'form',
+                    mode: 'edit',
+                    domain: ['id', '=', this.id],
+                    lang: environment.lang,
+                    callback: (data: any) => {
+                        if (data && data.objects) {
+                            for (let object of data.objects) {
+                                if (object.id != this.id) continue;
+                                for (let field of Object.keys(this)) {
+                                    if (object.hasOwnProperty(field)) {
+                                        this[field] = (this[field]) ? ((this[field].constructor)(object[field])) : object[field];
+                                    }
                                 }
                             }
+                            // request refresh for current context
+                            this.propagateContextChange({refresh: true});
                         }
-                        // request refresh for current context
-                        this.propagateContextChange({refresh: true});
                     }
-                }});
+                });
             });
 
             $module_add_button.on('click', () => {
-                let chapter_identifier = (this.chapters)?this.chapters.length+1:1;
-                window.eq.popup({entity: 'learn\\Chapter', type: 'form', mode: 'edit', purpose: 'create', domain: [['module_id', '=', this.id], ['identifier', '=', chapter_identifier], ['order', '=', chapter_identifier]], callback: (data:any) => {
-                    // append new chapter to module
-                    if(data && data.objects) {
-                        for(let item of data.objects) {
-                            let chapter = new ChapterClass(
-                                Number(item.id),
-                                Number(item.identifier),
-                                Number(item.order),
-                                item.title,
-                                item.pages
-                            );
-                            if(!this.chapters) {
-                                this.chapters = new Array<ChapterClass>();
+                let chapter_identifier = (this.chapters) ? this.chapters.length + 1 : 1;
+                window.eq.popup({
+                    entity: 'learn\\Chapter',
+                    type: 'form',
+                    mode: 'edit',
+                    purpose: 'create',
+                    domain: [['module_id', '=', this.id], ['identifier', '=', chapter_identifier], ['order', '=', chapter_identifier]],
+                    callback: (data: any) => {
+                        // append new chapter to module
+                        if (data && data.objects) {
+                            for (let item of data.objects) {
+                                let chapter = new ChapterClass(
+                                    Number(item.id),
+                                    Number(item.identifier),
+                                    Number(item.order),
+                                    item.title,
+                                    item.pages
+                                );
+                                if (!this.chapters) {
+                                    this.chapters = new Array<ChapterClass>();
+                                }
+                                this.chapters.push(chapter);
                             }
-                            this.chapters.push(chapter);
+                            this.propagateContextChange({refresh: true});
                         }
-                        this.propagateContextChange({refresh: true});
                     }
-                }});
+                });
             });
         }
 
         this.$container.append($prev).append($next);
 
 
-        if(this.context.mode == 'view') {
+        if (this.context.mode == 'view') {
             let $btnup = $('<div class="section-nav section-nav-up"><i class="arrow material-icons">chevron_left</i></div>').hide();
             let $btndown = $('<div class="section-nav section-nav-down"><i class="arrow material-icons">chevron_right</i></div>').hide();
 
@@ -240,16 +253,16 @@ export class ModuleClass {
                 let pages_count = $btndown.data('pages-count');
                 let page_index = $btndown.data('page-index');
 
-                if(page_index-1 <= 0) {
+                if (page_index - 1 <= 0) {
                     $btndown.data('page-index', 0);
                     $btnup.hide();
                 }
 
-                $($('body').find('.viewport-container').get().reverse()).each( (index:number, elem:HTMLElement) => {
+                $($('body').find('.viewport-container').get().reverse()).each((index: number, elem: HTMLElement) => {
                     let $elem = $(elem);
                     let vpos = $elem.data("vpos");
-                    vpos = (vpos == undefined)?0:vpos;
-                    $elem.css("transform", "translateY(" + (vpos+100) + "vh)").data('vpos', vpos+100);
+                    vpos = (vpos == undefined) ? 0 : vpos;
+                    $elem.css("transform", "translateY(" + (vpos + 100) + "vh)").data('vpos', vpos + 100);
                 });
 
             });
@@ -259,21 +272,20 @@ export class ModuleClass {
                 let pages_count = $btndown.data('pages-count');
                 let page_index = $btndown.data('page-index');
 
-                if(page_index+1 > pages_count) {
+                if (page_index + 1 > pages_count) {
                     $btndown.data('page-index', 0);
                     $btnup.hide();
-                    $('body').find('.viewport-container').each( (index:number, elem:HTMLElement) => {
+                    $('body').find('.viewport-container').each((index: number, elem: HTMLElement) => {
                         let $elem = $(elem);
-                        $elem.css("transform", "translateY(" + (100*index) + "vh)").data('vpos', 100*index);
+                        $elem.css("transform", "translateY(" + (100 * index) + "vh)").data('vpos', 100 * index);
                     });
-                }
-                else {
-                    $btndown.data('page-index', page_index+1);
-                    $('body').find('.viewport-container').each( (index:number, elem:HTMLElement) => {
+                } else {
+                    $btndown.data('page-index', page_index + 1);
+                    $('body').find('.viewport-container').each((index: number, elem: HTMLElement) => {
                         let $elem = $(elem);
                         let vpos = $elem.data("vpos");
-                        vpos = (vpos == undefined)?0:vpos;
-                        $elem.css("transform", "translateY(" + (vpos-100) + "vh)").data('vpos', vpos-100);
+                        vpos = (vpos == undefined) ? 0 : vpos;
+                        $elem.css("transform", "translateY(" + (vpos - 100) + "vh)").data('vpos', vpos - 100);
                     });
                 }
 
@@ -284,38 +296,34 @@ export class ModuleClass {
 
     }
 
-    public propagateContextChange(contextChange:any) {
+    public propagateContextChange(contextChange: any) {
         console.log('Module::propagateContext', contextChange, this.context, this.chapters);
 
-        for(let elem of Object.keys(contextChange)) {
-            if(elem.indexOf('$module') == 0) {
+        for (let elem of Object.keys(contextChange)) {
+            if (elem.indexOf('$module') == 0) {
                 let value = contextChange[elem];
                 const parts = elem.split('.');
-                if(parts.length > 1) {
-                    if(parts[1] == 'actions_counter') {
+                if (parts.length > 1) {
+                    if (parts[1] == 'actions_counter') {
                         ++this.context[parts[1]];
-                    }
-                    else if(parts[1] == 'next_active') {
+                    } else if (parts[1] == 'next_active') {
                         // set next active                        
-                        let chapter_context:any = this.chapters[this.context.chapter_index].getContext();
-                        if( (chapter_context.page_index+1) < this.chapters[this.context.chapter_index].pages.length || (this.context.chapter_index+1) < this.chapters.length ) {
+                        let chapter_context: any = this.chapters[this.context.chapter_index].getContext();
+                        if ((chapter_context.page_index + 1) < this.chapters[this.context.chapter_index].pages.length || (this.context.chapter_index + 1) < this.chapters.length) {
                             this.context['next_active'] = true;
                             this.$container.find('.page-nav-next').show();
-                        }
-                        else {
+                        } else {
                             this.context['next_active'] = false;
                             this.$container.find('.page-nav-next').hide();
                         }
-                    }
-                    else if(parts[1] == 'remove_chapter') {
+                    } else if (parts[1] == 'remove_chapter') {
                         // value is widget id
-                        for(const [index, chapter] of this.chapters.entries()) {
-                            if(chapter.id == value) {
+                        for (const [index, chapter] of this.chapters.entries()) {
+                            if (chapter.id == value) {
                                 this.chapters.splice(index, 1);
                             }
                         }
-                    }
-                    else {
+                    } else {
                         this.context[parts[1]] = value;
                     }
                 }
@@ -323,7 +331,7 @@ export class ModuleClass {
         }
 
         // an object has been changed and requests re-rendering
-        if(contextChange.refresh) {
+        if (contextChange.refresh) {
             this.render();
         }
 
@@ -336,14 +344,14 @@ export class ModuleClass {
      * Changes received from parent or self
      * @param contextChange
      */
-     public onContextChange(contextChange:any) {
+    public onContextChange(contextChange: any) {
 
         // update contextChange object with instance context
-        for(let elem of Object.keys(this.context)) {
-            contextChange['$module.'+elem] = this.context[elem];
+        for (let elem of Object.keys(this.context)) {
+            contextChange['$module.' + elem] = this.context[elem];
         }
 
-        if(typeof this.chapters[this.context.chapter_index].onContextChange === 'function') {
+        if (typeof this.chapters[this.context.chapter_index].onContextChange === 'function') {
             this.chapters[this.context.chapter_index].onContextChange(contextChange);
         }
     }
@@ -355,17 +363,18 @@ export class ModuleClass {
     public render() {
         console.log("Module::render()", this.context);
 
-        if(this.context.mode == 'edit') {
+        if (this.context.mode == 'edit') {
             this.$container.addClass('_edit');
-        }
-        else {
+        } else {
             this.$container.removeClass('_edit');
         }
 
-        if(this.chapters && this.chapters.length) {
-            let item:any = this.chapters[this.context.chapter_index];
+        console.log('Module::render', this.context, this.chapters, this.context.chapter_index, this.chapters[this.context.chapter_index]);
 
-            let chapter:ChapterClass = new ChapterClass(
+        if (this.chapters && this.chapters.length) {
+            let item: any = this.chapters[this.context.chapter_index];
+
+            let chapter: ChapterClass = new ChapterClass(
                 item.id,
                 item.identifier,
                 item.order,

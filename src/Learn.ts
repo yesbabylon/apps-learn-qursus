@@ -92,7 +92,7 @@ class Learn {
                 $('.menu-top .middle-cell').empty().append($lang_select);
 
             })
-                .fail((response: any) => {
+                .fail((response: any): void => {
                     console.log('unexpected error', response);
                     let error_id = 'unknown_error'
                     if (response.responseJSON && response.responseJSON.errors) {
