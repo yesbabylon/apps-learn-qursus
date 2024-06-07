@@ -151,12 +151,6 @@ body.edit .menu-top .inner .cell a {
   margin-right: 5px;
 }
 
-.viewport-container._edit .page-controls .actions:hover {
-  width: 106px;
-}
-
-
-
 .viewport-container._edit .controls .label {
   display: block;
   border-radius: 50px;
