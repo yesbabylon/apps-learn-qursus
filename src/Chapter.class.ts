@@ -4,9 +4,6 @@ import {ApiService} from "./qursus-services";
 import ModuleClass from "./Module.class";
 
 
-/**
- *
- */
 export class ChapterClass {
     // allow virtual keys for dynamic assignment after API updates (we make sure to only use keys defined below)
     [key: string]: any;
@@ -89,7 +86,6 @@ export class ChapterClass {
                 item.next_active,
             );
 
-
             this.pages[this.context.page_index] = page;
             page.setParent(this);
 
@@ -107,7 +103,6 @@ export class ChapterClass {
             // remove any previously rendered controls
             $('body').find('.controls.chapter-controls').remove();
 
-
             let $chapter_controls = $('<div class="controls chapter-controls"><div class="label">Chapter ' + this.identifier + '</div></div>');
             let $chapter_actions = $('<div class="actions chapter-actions"></div>');
             let $chapter_edit_button = $('<div class="action-button chapter-edit-button" title="Edit Chapter"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
@@ -120,7 +115,6 @@ export class ChapterClass {
             /*
              setup action handlers
             */
-
             $chapter_edit_button.on('click', () => {
                 window.eq.popup({
                     entity: 'learn\\Chapter',
@@ -182,9 +176,7 @@ export class ChapterClass {
                     this.parent.propagateContextChange({'$module.remove_chapter': this.id, refresh: true});
                 }
             });
-
         }
-
         return this.$container;
     }
 
@@ -235,8 +227,6 @@ export class ChapterClass {
         if (this.pages && this.pages.length && typeof this.pages[this.context.page_index].onContextChange === 'function') {
             this.pages[this.context.page_index].onContextChange(contextChange);
         }
-
-
     }
 }
 

@@ -20,10 +20,8 @@ export class PageClass {
     public next_active: [];            // domain
     public selection: number;
 
-
     private readonly $container: JQuery;
     private parent: ChapterClass;
-
 
     // page-specific context
     private context: any = {
@@ -49,7 +47,6 @@ export class PageClass {
         this.next_active = next_active;
         this.selection = 0;
 
-
         if (this.next_active && !Array.isArray(this.next_active)) {
             this.next_active = JSON.parse((<string>this.next_active).replace(/'/g, '"'));
         }
@@ -57,11 +54,11 @@ export class PageClass {
         this.$container = $('<div id="page-container" class="page"></div>');
     }
 
-    public setParent(parent: ChapterClass) {
+    public setParent(parent: ChapterClass): void {
         this.parent = parent;
     }
 
-    public getParent() {
+    public getParent(): ChapterClass {
         return this.parent;
     }
 
@@ -117,11 +114,8 @@ export class PageClass {
                 this.$container.append(leaf.render(is_single, context));
 
                 if (this.next_active && !this.next_active.length) {
-                    if (this.parent instanceof ChapterClass) {
-                        this.parent.propagateContextChange({'$module.next_active': true});
-                    }
+                    this.parent.propagateContextChange({'$module.next_active': true});
                 }
-
             }
         }
         $('body').find('.section-container.viewport-container').remove();
@@ -129,40 +123,28 @@ export class PageClass {
         // reset section-nav buttons (hide)
         // $('body').find('.section-nav').hide();
 
-
         if (context.mode == 'edit') {
             /*
              append controls to module container
             */
-
             // remove any previously rendered controls
-            if (this.parent instanceof ChapterClass) {
-                this.parent.getParent().getContainer().find('.controls.page-controls').remove();
-            }
+            this.parent.getParent().getContainer().find('.controls.page-controls').remove();
 
             let $page_controls = $('<div class="controls page-controls"><div class="label">Page ' + this.identifier + '</div></div>');
             let $page_actions = $('<div class="actions page-actions"></div>');
             let $page_edit_button = $('<div class="action-button page-edit-button" title="Edit Page"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             let $page_add_button = $('<div class="action-button page-add-button" title="Add a Leaf"><span class="material-icons mdc-fab__icon">add</span></div>');
-            let $page_add_sect_button = $('<div class="action-button page-add_sect-button" title="Add a Section"><span class="material-icons mdc-fab__icon">library_add</span></div>');
             let $page_delete_button = $('<div class="action-button page-delete-button" title="Delete Page"><span class="material-icons mdc-fab__icon">delete</span></div>');
+
             $page_actions.append($page_edit_button);
             $page_actions.append($page_add_button);
-            if (this.parent instanceof ChapterClass) {
-                $page_actions.append($page_add_sect_button);
-            }
             $page_actions.append($page_delete_button);
-
             $page_controls.append($page_actions);
-
-            if (this.parent instanceof ChapterClass) {
-                $page_controls.appendTo(this.parent.getParent().getContainer());
-            }
+            $page_controls.appendTo(this.parent.getParent().getContainer());
 
             /*
              setup action handlers
             */
-
             $page_edit_button.on('click', () => {
                 window.eq.popup({
                     entity: 'learn\\Page',
@@ -180,9 +162,7 @@ export class PageClass {
                                 }
                             }
                             // request refresh for current context
-                            if (this.parent instanceof ChapterClass) {
-                                this.parent.propagateContextChange({refresh: true});
-                            }
+                            this.parent.propagateContextChange({refresh: true});
                         }
                     }
                 });
@@ -224,16 +204,12 @@ export class PageClass {
 
             $page_delete_button.on('click', () => {
                 if (window.confirm("Page is about to be removed. Do you confirm ?")) {
-
                     this.parent.getParent().getContainer().find('.controls.page-controls').remove();
-                    if (this.parent instanceof ChapterClass) {
-                        ApiService.update('learn\\Chapter', [this.parent.id], {'pages_ids': [-this.id]}, true);
-                        this.parent.propagateContextChange({'$chapter.remove_page': this.id, refresh: true});
-                    }
+                    ApiService.update('learn\\Chapter', [this.parent.id], {'pages_ids': [this.id]}, true);
+                    this.parent.propagateContextChange({'$chapter.remove_page': this.id, refresh: true});
                 }
             });
         }
-
         return this.$container;
     }
 
@@ -276,11 +252,7 @@ export class PageClass {
             }
         }
 
-        if (this.parent instanceof ChapterClass) {
-            this.parent.propagateContextChange(contextChange);
-        } else {
-            this.onContextChange(contextChange);
-        }
+        this.parent.propagateContextChange(contextChange);
     }
 
     /**
@@ -302,7 +274,6 @@ export class PageClass {
         }
 
         // relay contextChange to children
-
         if (this.leaves && this.leaves.length) {
             for (let leaf of this.leaves) {
                 if (typeof leaf.onContextChange === 'function') {
@@ -311,7 +282,6 @@ export class PageClass {
             }
         }
     }
-
 }
 
 export default PageClass;
