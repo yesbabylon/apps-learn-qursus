@@ -175,12 +175,15 @@ export class ModuleClass {
             /*
              append controls to module container
             */
-            let $module_controls = $('<div class="controls module-controls"><div class="label">Module ' + this.identifier + '</div></div>');
+            let $module_controls = $('<div class="controls module-controls"></div>');
+            let $module_label = $('<div class="label"></div>');
+            let $module_label_text = $('<span>Module ' + this.identifier + '</span>');
             let $module_actions = $('<div class="actions module-actions"></div>');
             let $module_edit_button = $('<div class="action-button module-edit-button" title="Edit Module"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             let $module_add_button = $('<div class="action-button module-add-button" title="Add a Chapter"><span class="material-icons mdc-fab__icon">add</span></div>');
             $module_actions.append($module_edit_button).append($module_add_button);
-            $module_controls.append($module_actions);
+            $module_label.append($module_label_text).append($module_actions);
+            $module_controls.append($module_label);
             $module_controls.appendTo(this.$container);
 
             /*

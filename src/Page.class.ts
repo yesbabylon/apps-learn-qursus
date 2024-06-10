@@ -130,8 +130,10 @@ export class PageClass {
             // remove any previously rendered controls
             this.parent.getParent().getContainer().find('.controls.page-controls').remove();
 
-            let $page_controls = $('<div class="controls page-controls"><div class="label">Page ' + this.identifier + '</div></div>');
             let $page_actions = $('<div class="actions page-actions"></div>');
+            let $page_controls = $('<div class="controls page-controls"></div>');
+            let $page_label = $('<div class="label"></div>');
+            let $page_label_text = $('<span>Page ' + this.identifier + '</span>');
             let $page_edit_button = $('<div class="action-button page-edit-button" title="Edit Page"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             let $page_add_button = $('<div class="action-button page-add-button" title="Add a Leaf"><span class="material-icons mdc-fab__icon">add</span></div>');
             let $page_delete_button = $('<div class="action-button page-delete-button" title="Delete Page"><span class="material-icons mdc-fab__icon">delete</span></div>');
@@ -139,7 +141,9 @@ export class PageClass {
             $page_actions.append($page_edit_button);
             $page_actions.append($page_add_button);
             $page_actions.append($page_delete_button);
-            $page_controls.append($page_actions);
+            $page_label.append($page_label_text);
+            $page_label.append($page_actions);
+            $page_controls.append($page_label);
             $page_controls.appendTo(this.parent.getParent().getContainer());
 
             /*

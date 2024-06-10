@@ -103,13 +103,18 @@ export class ChapterClass {
             // remove any previously rendered controls
             $('body').find('.controls.chapter-controls').remove();
 
-            let $chapter_controls = $('<div class="controls chapter-controls"><div class="label">Chapter ' + this.identifier + '</div></div>');
             let $chapter_actions = $('<div class="actions chapter-actions"></div>');
+            let $chapter_controls = $('<div class="controls chapter-controls"></div>');
+            let $chapter_label = $('<div class="label"></div>');
+            let $chapter_label_text = $('<span>Chapter ' + this.identifier + '</span>');
             let $chapter_edit_button = $('<div class="action-button chapter-edit-button" title="Edit Chapter"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             let $chapter_add_button = $('<div class="action-button chapter-add-button" title="Add a Page"><span class="material-icons mdc-fab__icon">add</span></div>');
             let $chapter_delete_button = $('<div class="action-button chapter-delete-button" title="Delete Chapter"><span class="material-icons mdc-fab__icon">delete</span></div>');
+
             $chapter_actions.append($chapter_edit_button).append($chapter_add_button).append($chapter_delete_button);
-            $chapter_controls.append($chapter_actions);
+            $chapter_label.append($chapter_label_text);
+            $chapter_label.append($chapter_actions);
+            $chapter_controls.append($chapter_label);
             $chapter_controls.appendTo(this.parent.getContainer());
 
             /*
