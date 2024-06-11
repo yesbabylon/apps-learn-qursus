@@ -3,6 +3,7 @@ import {DomainClass} from "./Domain.class";
 import {TextRendererClass} from "./TextRenderer.class";
 import {ApiService, EnvService} from "./qursus-services";
 import GroupClass from "./Group.class";
+import popover, {Widget, Group, Leaf} from "./Popover";
 
 
 declare global {
@@ -300,6 +301,20 @@ export class WidgetClass {
 
         if (context.mode == 'edit') {
             let $actions = $('<div class="actions widget-actions"></div>');
+
+            const widgetTypeProps: Widget = {
+                name: 'Widget',
+                order: this.order,
+                group: {
+                    name: 'Group',
+                    order: this.parent.order,
+                    leaf: {
+                        name: 'Leaf',
+                        order: this.parent.getParent().order ? this.parent.getParent().order : 1
+                    }
+                }
+            };
+            popover("Widget", widgetTypeProps, $actions);
 
             let $edit_button = $('<div class="action-button widget-edit-button" title="Edit Widget"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             let $delete_button = $('<div class="action-button widget-delete-button" title="Delete Widget"><span class="material-icons mdc-fab__icon">delete</span></div>');
