@@ -3,7 +3,6 @@ import {DomainClass} from "./Domain.class";
 import {TextRendererClass} from "./TextRenderer.class";
 import {ApiService, EnvService} from "./qursus-services";
 import GroupClass from "./Group.class";
-import popover, {Widget, Group, Leaf} from "./Popover";
 
 
 declare global {
@@ -301,25 +300,13 @@ export class WidgetClass {
 
         if (context.mode == 'edit') {
             let $actions = $('<div class="actions widget-actions"></div>');
-
-            const widgetTypeProps: Widget = {
-                name: 'Widget',
-                order: this.order,
-                group: {
-                    name: 'Group',
-                    order: this.parent.order,
-                    leaf: {
-                        name: 'Leaf',
-                        order: this.parent.getParent().order ? this.parent.getParent().order : 1
-                    }
-                }
-            };
-            popover("Widget", widgetTypeProps, $actions);
-
+            let $widget_actions_label = $('<div class="label"></div>');
+            let $widget_actions_label_text = $('<span>Widget ' + this.order + '</span>');
             let $edit_button = $('<div class="action-button widget-edit-button" title="Edit Widget"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
             let $delete_button = $('<div class="action-button widget-delete-button" title="Delete Widget"><span class="material-icons mdc-fab__icon">delete</span></div>');
 
-            $actions.append($edit_button).append($delete_button);
+            $widget_actions_label.append($widget_actions_label_text);
+            $actions.append($edit_button, $delete_button, $widget_actions_label);
 
             $edit_button.on('click', async () => {
                 const environment = await EnvService.getEnv();

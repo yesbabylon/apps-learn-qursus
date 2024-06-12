@@ -26,6 +26,14 @@ class Qursus {
         console.log("Qursus::constructor");
 
         this.onload();
+
+        this.sendLearningEvent();
+    }
+
+    private sendLearningEvent() {
+        window.addEventListener('click', () => {
+            window.parent.postMessage('qursus_click_event', '*');
+        })
     }
 
     private async onload() {

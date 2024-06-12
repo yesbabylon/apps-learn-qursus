@@ -655,7 +655,7 @@ body.edit .menu-top .inner .cell a {
 }
 
 .viewport-container._edit .actions:hover {
-    width: 80px;
+    width: max-content;
     opacity: 1;
 }
 
@@ -683,8 +683,12 @@ body.edit .menu-top .inner .cell a {
     top: calc(50% - 12px);
 }
 
+.viewport-container._edit .group .group-actions .label {
+    margin: auto 16px;
+}
+
 .viewport-container._edit .group .group-actions:hover {
-    width: 132px;
+    width: max-content;
 }
 
 .viewport-container._edit .widget .widget-actions {
@@ -694,8 +698,15 @@ body.edit .menu-top .inner .cell a {
     direction: rtl;
 }
 
+.viewport-container._edit .actions .label {
+    font-size: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 .viewport-container._edit .widget .widget-actions:hover {
-    width: 54px;
+    width: max-content;
+    padding-left: 10px;
     opacity: 1;
 }
 
@@ -1166,62 +1177,3 @@ body.edit .menu-top .inner .cell a {
     top: 100px;
     left: 100px
 }
-
-.actions:hover:has(.popover) .leaf-container,
-.actions:hover:has(.popover) .leaf-container .actions.leaf-actions,
-.actions:hover:has(.popover) .leaf-container .leaf.widget.contrast_light,
-.actions:hover:has(.popover) .leaf-container .leaf.widget.contrast_dark,
-.actions:hover:has(.popover) {
-    overflow: visible !important;
-}
-
-.actions .popover {
-    display: none;
-    position: absolute;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background: white;
-    color: black;
-    padding: 0;
-    width: max-content;
-}
-
-.actions .popover .popover__header {
-    background-color: lightgrey;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: left;
-}
-
-.actions .popover .popover__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-}
-
-.actions .popover .popover__content .popover__content__prop {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    font-size: 16px;
-    font-weight: normal;
-}
-
-.actions .popover .popover__content .popover__content__prop .popover_content__prop__label {
-    font-weight: bold;
-}
-
-.actions .popover .popover__content .popover__content__prop .popover__content__prop__value {
-    font-weight: normal;
-}
-

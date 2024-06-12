@@ -46,6 +46,7 @@ export class LeafClass {
 
         this.id = id;
         this.identifier = identifier;
+        this.order = order;
         this.groups = groups;
         this.visible = visible;
         this.background_image = background_image;
@@ -349,8 +350,16 @@ export class LeafClass {
             }
         } else {
             let $actions = $('<div class="actions leaf-actions"></div>');
-
             let $edit_button = $('<div class="action-button leaf-edit-button" title="Edit Leaf"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
+            let $add_button = $('<div class="action-button leaf-add-button" title="Add a Group"><span class="material-icons mdc-fab__icon">add</span></div>');
+            let $delete_button = $('<div class="action-button leaf-delete-button" title="Delete Leaf"><span class="material-icons mdc-fab__icon">delete</span></div>');
+            let $leaf_actions_label = $('<div class="label"></div>');
+            let $leaf_actions_label_text = $('<span>Leaf ' + this.order + '</span>');
+
+            $leaf_actions_label.append($leaf_actions_label_text);
+
+            $actions.append($edit_button, $add_button, $delete_button, $leaf_actions_label);
+
             $edit_button.on('click', () => {
                 window.eq.popup({
                     entity: 'learn\\Leaf',
@@ -372,7 +381,6 @@ export class LeafClass {
                     }
                 });
             });
-            let $add_button = $('<div class="action-button leaf-add-button" title="Add a Group"><span class="material-icons mdc-fab__icon">add</span></div>');
             $add_button.on('click', () => {
                 let group_identifier = (this.groups) ? this.groups.length + 1 : 1;
                 window.eq.popup({
@@ -406,7 +414,6 @@ export class LeafClass {
                     }
                 });
             });
-            let $delete_button = $('<div class="action-button leaf-delete-button" title="Delete Leaf"><span class="material-icons mdc-fab__icon">delete</span></div>');
             $delete_button.on('click', () => {
                 if (window.confirm("Leaf is about to be removed. Do you confirm ?")) {
                     ApiService.delete('learn\\Leaf', [this.id], true);
@@ -414,9 +421,6 @@ export class LeafClass {
                 }
             });
 
-            $actions.append($edit_button);
-            $actions.append($add_button);
-            $actions.append($delete_button);
 
             this.$container.append($actions);
         }
