@@ -2,9 +2,7 @@ import {$} from "./jquery-lib";
 import {WidgetClass} from "./Widget.class";
 import {DomainClass} from "./Domain.class";
 import {ApiService} from "./qursus-services";
-
 import LeafClass from "./Leaf.class";
-
 
 /**
  *
@@ -83,7 +81,7 @@ export class GroupClass {
     }
 
     public render(context: any) {
-        console.log("GroupClass::render", this);
+        // console.log("GroupClass::render", this);
 
         // this.setContext(context);
 
@@ -242,7 +240,7 @@ export class GroupClass {
 
 
     public propagateContextChange(contextChange: any) {
-        console.log('Group::propagateContext', this, contextChange);
+        // console.log('Group::propagateContext', this, contextChange);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$group') == 0) {
@@ -276,7 +274,7 @@ export class GroupClass {
      * @param contextChange
      */
     public onContextChange(contextChange: any) {
-        console.log('Group::onContextChange', contextChange);
+        // console.log('Group::onContextChange', contextChange);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$leaf.mode') == 0) {

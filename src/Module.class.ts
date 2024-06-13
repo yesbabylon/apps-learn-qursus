@@ -3,6 +3,8 @@ import {$} from "./jquery-lib";
 import {ApiService, EnvService} from "./qursus-services";
 
 import {ChapterClass} from "./Chapter.class";
+import {LearningAppMessage} from "./LearningAppMessage";
+import {MessageEventEnum} from "./types/qursus";
 
 declare global {
     interface Window {
@@ -59,16 +61,12 @@ export class ModuleClass {
         this.chapters = chapters;
 
         this.$container = $();
-
-
     }
 
 
     public setContext(context: any) {
-        console.log('Module::setContext', context);
-
+        // console.log('Module::setContext', context);
         this.context = {...this.context, ...context};
-
     }
 
     public getContext() {
@@ -78,7 +76,6 @@ export class ModuleClass {
     public getContainer() {
         return this.$container;
     }
-
 
     public init() {
 
@@ -163,6 +160,15 @@ export class ModuleClass {
                     page_index: this.context.page_index
                 });
             }
+
+            LearningAppMessage.send({
+                type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
+                data: {
+                    module_id: this.id,
+                    chapter_index: this.context.chapter_index,
+                    page_index: this.context.page_index
+                }
+            })
 
         });
 
@@ -267,7 +273,6 @@ export class ModuleClass {
                     vpos = (vpos == undefined) ? 0 : vpos;
                     $elem.css("transform", "translateY(" + (vpos + 100) + "vh)").data('vpos', vpos + 100);
                 });
-
             });
 
             $btndown.on('click', () => {
@@ -291,16 +296,14 @@ export class ModuleClass {
                         $elem.css("transform", "translateY(" + (vpos - 100) + "vh)").data('vpos', vpos - 100);
                     });
                 }
-
             });
 
             $('body').append($btnup).append($btndown);
         }
-
     }
 
     public propagateContextChange(contextChange: any) {
-        console.log('Module::propagateContext', contextChange, this.context, this.chapters);
+        // console.log('Module::propagateContext', contextChange, this.context, this.chapters);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$module') == 0) {
@@ -364,7 +367,7 @@ export class ModuleClass {
      *
      */
     public render() {
-        console.log("Module::render()", this.context);
+        // console.log("Module::render()", this.context);
 
         if (this.context.mode == 'edit') {
             this.$container.addClass('_edit');
@@ -372,7 +375,7 @@ export class ModuleClass {
             this.$container.removeClass('_edit');
         }
 
-        console.log('Module::render', this.context, this.chapters, this.context.chapter_index, this.chapters[this.context.chapter_index]);
+        // console.log('Module::render', this.context, this.chapters, this.context.chapter_index, this.chapters[this.context.chapter_index]);
 
         if (this.chapters && this.chapters.length) {
             let item: any = this.chapters[this.context.chapter_index];

@@ -160,7 +160,7 @@ export class DomainClass {
      * @param context
      */
     public evaluate(context: any): boolean {
-        console.log('Domain::evaluate', context);
+        // console.log('Domain::evaluate', context);
         if (!this.clauses.length) return true;
         let res = false;
         // evaluate clauses (OR) and conditions (AND)

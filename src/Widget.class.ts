@@ -116,7 +116,7 @@ export class WidgetClass {
     }
 
     public render(context: any) {
-        console.log("WidgetClass::render", this);
+        // console.log("WidgetClass::render", this);
 
         // this.setContext(context);
 
@@ -245,7 +245,7 @@ export class WidgetClass {
                     }
                     if (this.type == 'sound' && this.sound_url && this.sound_url.length) {
                         this.$container.on('click', () => {
-                            console.log('playing sound');
+                            // console.log('playing sound');
                             const sound = new Audio(this.sound_url);
                             sound.play();
                         });
@@ -354,7 +354,7 @@ export class WidgetClass {
      * @param contextChange
      */
     public onContextChange(contextChange: any) {
-        console.log('Widget::onContextChange', contextChange);
+        // console.log('Widget::onContextChange', contextChange);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$group.mode') == 0) {

@@ -2,6 +2,8 @@ import {$} from "./jquery-lib";
 import {PageClass} from "./Page.class";
 import {ApiService} from "./qursus-services";
 import ModuleClass from "./Module.class";
+import {LearningAppMessage} from "./LearningAppMessage";
+import {MessageEventEnum} from "./types/qursus";
 
 
 export class ChapterClass {
@@ -179,6 +181,14 @@ export class ChapterClass {
                 if (window.confirm("Chapter is about to be removed. Do you confirm ?")) {
                     ApiService.update('learn\\Module', [this.parent.id], {'chapters_ids': [-this.id]}, true);
                     this.parent.propagateContextChange({'$module.remove_chapter': this.id, refresh: true});
+
+                    LearningAppMessage.send({
+                        type: MessageEventEnum.CHAPTER_REMOVED,
+                        data: {
+                            module_id: this.parent.id,
+                            chapter_id: this.id
+                        }
+                    })
                 }
             });
         }
@@ -186,7 +196,7 @@ export class ChapterClass {
     }
 
     public propagateContextChange(contextChange: any) {
-        console.log('Chapter::propagateContext', contextChange);
+        // console.log('Chapter::propagateContext', contextChange);
 
         for (let elem in contextChange) {
             if (elem.indexOf('$chapter') == 0) {
@@ -215,7 +225,7 @@ export class ChapterClass {
     }
 
     public onContextChange(contextChange: any) {
-        console.log('Chapter::onContextChange', contextChange, this.context);
+        // console.log('Chapter::onContextChange', contextChange, this.context);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$module.mode') == 0) {

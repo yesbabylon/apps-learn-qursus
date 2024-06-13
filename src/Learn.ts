@@ -23,15 +23,12 @@ class Learn {
     private languages: any[] = ['en'];
 
     constructor() {
-        console.log("Learn::constructor");
-
         this.onload();
     }
 
     private async onload() {
         const environment = await EnvService.getEnv();
         await $.getJSON("environment.json", (json: any) => {
-            console.log("found environment file", json);
 
             for (let field in json) {
                 if (environment.hasOwnProperty(field)) {
@@ -93,7 +90,7 @@ class Learn {
 
             })
                 .fail((response: any): void => {
-                    console.log('unexpected error', response);
+                    console.log('Learn.init => JQueryStatic.getJSON => unexpected error', response);
                     let error_id = 'unknown_error'
                     if (response.responseJSON && response.responseJSON.errors) {
                         if (response.responseJSON.errors.NOT_ALLOWED) {

@@ -82,7 +82,7 @@ export class LeafClass {
     }
 
     public render(is_single: boolean = false, context: any) {
-        console.log("LeafClass::render", this, context);
+        // console.log("LeafClass::render", this, context);
 
 //        this.setContext(context);
 
@@ -432,7 +432,7 @@ export class LeafClass {
     }
 
     public propagateContextChange(contextChange: any) {
-        console.log('Leaf::propagateContext', contextChange);
+        // console.log('Leaf::propagateContext', contextChange);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$leaf') == 0) {
@@ -492,7 +492,7 @@ export class LeafClass {
     }
 
     public onContextChange(contextChange: any) {
-        console.log('Leaf::onContextChange', this, contextChange);
+        // console.log('Leaf::onContextChange', this, contextChange);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$page.mode') == 0) {

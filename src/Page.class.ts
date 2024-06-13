@@ -3,6 +3,8 @@ import {LeafClass} from "./Leaf.class";
 import {DomainClass} from "./Domain.class";
 import {ChapterClass} from "./Chapter.class";
 import {ApiService} from "./qursus-services";
+import {LearningAppMessage} from "./LearningAppMessage";
+import {MessageEventEnum} from "./types/qursus";
 
 
 /**
@@ -75,7 +77,7 @@ export class PageClass {
     }
 
     public render(context: any) {
-        console.log("PageClass::render", this);
+        // console.log("PageClass::render", this);
 
 //        this.setContext(context);
 
@@ -211,6 +213,14 @@ export class PageClass {
                     this.parent.getParent().getContainer().find('.controls.page-controls').remove();
                     ApiService.update('learn\\Chapter', [this.parent.id], {'pages_ids': [this.id]}, true);
                     this.parent.propagateContextChange({'$chapter.remove_page': this.id, refresh: true});
+
+                    LearningAppMessage.send({
+                        type: MessageEventEnum.PAGE_REMOVED,
+                        data: {
+                            page_id: this.id,
+                            chapter_id: this.parent.id
+                        }
+                    })
                 }
             });
         }
@@ -222,7 +232,7 @@ export class PageClass {
      * @param contextChange
      */
     public propagateContextChange(contextChange: any) {
-        console.log('Page::propagateContext', contextChange);
+        // console.log('Page::propagateContext', contextChange);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$page') == 0) {
@@ -264,7 +274,7 @@ export class PageClass {
      * @param contextChange
      */
     public onContextChange(contextChange: any) {
-        console.log('Page::onContextChange', contextChange);
+        // console.log('Page::onContextChange', contextChange);
 
         for (let elem of Object.keys(contextChange)) {
             if (elem.indexOf('$chapter.mode') == 0) {

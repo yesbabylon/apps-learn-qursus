@@ -3,6 +3,7 @@ import {ContextService} from "./qursus-services";
 import {ModuleClass} from "./Module.class";
 import {CourseClass} from "./Course.class";
 import {EnvService} from "./qursus-services";
+import {LearningAppMessage} from "./LearningAppMessage";
 
 
 declare global {
@@ -23,30 +24,21 @@ class Qursus {
     private languages: any[] = ['en'];
 
     constructor() {
-        console.log("Qursus::constructor");
-
         this.onload();
 
-        this.sendLearningEvent();
+        LearningAppMessage.sendLearningClickEvent();
     }
 
-    private sendLearningEvent() {
-        window.addEventListener('click', () => {
-            window.parent.postMessage('qursus_click_event', '*');
-        })
-    }
 
     private async onload() {
         const environment = await EnvService.getEnv();
         await $.getJSON("environment.json", (json: any) => {
-            console.log("found environment file", json);
 
             for (let field in json) {
                 if (environment.hasOwnProperty(field)) {
                     environment[field] = json[field];
                 }
             }
-            console.log(environment);
         })
             .fail((response: any): void => {
                 console.log("no environment file found");
@@ -102,7 +94,7 @@ class Qursus {
 
             })
                 .fail((response: any) => {
-                    console.log('unexpected error', response);
+                    console.log('Qursus.init => JQueryStatic.getJSON => unexpected error', response);
                     let error_id = 'unknown_error'
                     if (response.responseJSON && response.responseJSON.errors) {
                         if (response.responseJSON.errors.NOT_ALLOWED) {
