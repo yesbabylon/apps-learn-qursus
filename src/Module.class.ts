@@ -16,6 +16,7 @@ enum MessageEventEnum {
     CHAPTER_REMOVED = 'chapter_removed',
     PAGE_REMOVED = 'page_removed',
     CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
+    MODULE_PROGRESSION_FINISHED = 'module_progression_finished',
 }
 
 /**
@@ -67,6 +68,8 @@ export class ModuleClass {
         this.chapters = chapters;
 
         this.$container = $();
+
+
     }
 
 
@@ -182,6 +185,15 @@ export class ModuleClass {
                             chapter_index: this.context.chapter_index
                         }
                     })
+                } else if (this.context.chapter_index === this.chapters.length - 1 &&
+                    this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1) {
+                    LearningAppMessage.send({
+                        type: MessageEventEnum.MODULE_PROGRESSION_FINISHED,
+                        data: {
+                            module_id: this.id
+                        }
+                    })
+
                 }
             }
         });
