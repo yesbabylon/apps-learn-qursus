@@ -4,12 +4,18 @@ import {ApiService, EnvService} from "./qursus-services";
 
 import {ChapterClass} from "./Chapter.class";
 import {LearningAppMessage} from "./LearningAppMessage";
-import {MessageEventEnum} from "./types/qursus";
 
 declare global {
     interface Window {
         eq: any;
     }
+}
+
+enum MessageEventEnum {
+    EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
+    CHAPTER_REMOVED = 'chapter_removed',
+    PAGE_REMOVED = 'page_removed',
+    CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
 }
 
 /**
@@ -159,17 +165,25 @@ export class ModuleClass {
                     chapter_index: this.context.chapter_index,
                     page_index: this.context.page_index
                 });
-            }
 
-            LearningAppMessage.send({
-                type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
-                data: {
-                    module_id: this.id,
-                    chapter_index: this.context.chapter_index,
-                    page_index: this.context.page_index
+                LearningAppMessage.send({
+                    type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
+                    data: {
+                        module_id: this.id,
+                        chapter_index: this.context.chapter_index,
+                        page_index: this.context.page_index
+                    }
+                });
+
+                if (this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1) {
+                    LearningAppMessage.send({
+                        type: MessageEventEnum.CHAPTER_PROGRESSION_FINISHED,
+                        data: {
+                            chapter_index: this.context.chapter_index
+                        }
+                    })
                 }
-            })
-
+            }
         });
 
 

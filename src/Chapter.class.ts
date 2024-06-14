@@ -3,8 +3,13 @@ import {PageClass} from "./Page.class";
 import {ApiService} from "./qursus-services";
 import ModuleClass from "./Module.class";
 import {LearningAppMessage} from "./LearningAppMessage";
-import {MessageEventEnum} from "./types/qursus";
 
+export enum MessageEventEnum {
+    EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
+    CHAPTER_REMOVED = 'chapter_removed',
+    PAGE_REMOVED = 'page_removed',
+    CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
+}
 
 export class ChapterClass {
     // allow virtual keys for dynamic assignment after API updates (we make sure to only use keys defined below)

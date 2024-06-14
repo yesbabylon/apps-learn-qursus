@@ -4,8 +4,14 @@ import {DomainClass} from "./Domain.class";
 import {ChapterClass} from "./Chapter.class";
 import {ApiService} from "./qursus-services";
 import {LearningAppMessage} from "./LearningAppMessage";
-import {MessageEventEnum} from "./types/qursus";
 
+
+enum MessageEventEnum {
+    EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
+    CHAPTER_REMOVED = 'chapter_removed',
+    PAGE_REMOVED = 'page_removed',
+    CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
+}
 
 /**
  *
@@ -218,7 +224,8 @@ export class PageClass {
                         type: MessageEventEnum.PAGE_REMOVED,
                         data: {
                             page_id: this.id,
-                            chapter_id: this.parent.id
+                            chapter_id: this.parent.id,
+                            module_id: this.parent.getParent().id
                         }
                     })
                 }

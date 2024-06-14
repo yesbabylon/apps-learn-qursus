@@ -90,7 +90,7 @@ var _ApiService = /*#__PURE__*/function () {
                 environment = _context.sent;
                 _context.next = 6;
                 return _jqueryLib.$.get({
-                  url: environment.rest_api_url + '/userinfo'
+                  url: environment.rest_api_url + '/?get=core_userinfo'
                 });
 
               case 6:
@@ -708,7 +708,7 @@ var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/inte
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.default = exports.ChapterClass = void 0;
+exports.default = exports.ChapterClass = exports.MessageEventEnum = void 0;
 
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js"));
 
@@ -724,15 +724,23 @@ var _Page = __webpack_require__(/*! ./Page.class */ "./build/Page.class.js");
 
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
 
+var _LearningAppMessage = __webpack_require__(/*! ./LearningAppMessage */ "./build/LearningAppMessage.js");
+
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-/**
- *
- */
+var MessageEventEnum;
+exports.MessageEventEnum = MessageEventEnum;
+
+(function (MessageEventEnum) {
+  MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
+  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
+  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
+})(MessageEventEnum || (exports.MessageEventEnum = MessageEventEnum = {}));
+
 var ChapterClass = /*#__PURE__*/function () {
   function ChapterClass() {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -819,13 +827,17 @@ var ChapterClass = /*#__PURE__*/function () {
         */
         // remove any previously rendered controls
         (0, _jqueryLib.$)('body').find('.controls.chapter-controls').remove();
-        var $chapter_controls = (0, _jqueryLib.$)('<div class="controls chapter-controls"><div class="label">Chapter ' + this.identifier + '</div></div>');
         var $chapter_actions = (0, _jqueryLib.$)('<div class="actions chapter-actions"></div>');
+        var $chapter_controls = (0, _jqueryLib.$)('<div class="controls chapter-controls"></div>');
+        var $chapter_label = (0, _jqueryLib.$)('<div class="label"></div>');
+        var $chapter_label_text = (0, _jqueryLib.$)('<span>Chapter ' + this.identifier + '</span>');
         var $chapter_edit_button = (0, _jqueryLib.$)('<div class="action-button chapter-edit-button" title="Edit Chapter"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
         var $chapter_add_button = (0, _jqueryLib.$)('<div class="action-button chapter-add-button" title="Add a Page"><span class="material-icons mdc-fab__icon">add</span></div>');
         var $chapter_delete_button = (0, _jqueryLib.$)('<div class="action-button chapter-delete-button" title="Delete Chapter"><span class="material-icons mdc-fab__icon">delete</span></div>');
         $chapter_actions.append($chapter_edit_button).append($chapter_add_button).append($chapter_delete_button);
-        $chapter_controls.append($chapter_actions);
+        $chapter_label.append($chapter_label_text);
+        $chapter_label.append($chapter_actions);
+        $chapter_controls.append($chapter_label);
         $chapter_controls.appendTo(this.parent.getContainer());
         /*
          setup action handlers
@@ -919,6 +931,14 @@ var ChapterClass = /*#__PURE__*/function () {
               '$module.remove_chapter': _this.id,
               refresh: true
             });
+
+            _LearningAppMessage.LearningAppMessage.send({
+              type: MessageEventEnum.CHAPTER_REMOVED,
+              data: {
+                module_id: _this.parent.id,
+                chapter_id: _this.id
+              }
+            });
           }
         });
       }
@@ -928,8 +948,7 @@ var ChapterClass = /*#__PURE__*/function () {
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
-      console.log('Chapter::propagateContext', contextChange);
-
+      // console.log('Chapter::propagateContext', contextChange);
       for (var elem in contextChange) {
         if (elem.indexOf('$chapter') == 0) {
           var value = contextChange[elem];
@@ -972,8 +991,7 @@ var ChapterClass = /*#__PURE__*/function () {
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
-      console.log('Chapter::onContextChange', contextChange, this.context);
-
+      // console.log('Chapter::onContextChange', contextChange, this.context);
       for (var _i3 = 0, _Object$keys3 = Object.keys(contextChange); _i3 < _Object$keys3.length; _i3++) {
         var elem = _Object$keys3[_i3];
 
@@ -1024,6 +1042,7 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtim
 
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
 
+// Todo: AlexisVS: Script poisoned by WordPress options
 var _ContextService = /*#__PURE__*/function () {
   // module identifier (id field)
   function _ContextService() {
@@ -1033,14 +1052,14 @@ var _ContextService = /*#__PURE__*/function () {
     (0, _defineProperty2.default)(this, "page_index", 0);
     (0, _defineProperty2.default)(this, "mode", 'view');
     (0, _defineProperty2.default)(this, "user_allowed", true);
-    var wp_user_id = this.getCookieValue('wp_lms_user');
+    // let wp_user_id = this.getCookieValue('wp_lms_user');
+
     /*
     if(wp_user_id === undefined) {
         // prevent running app
         this.user_allowed = false;
     }
     */
-
     var queryString = window.location.search;
     var urlParams = new URLSearchParams(queryString);
 
@@ -1050,9 +1069,10 @@ var _ContextService = /*#__PURE__*/function () {
 
     if (urlParams.has('mode')) {
       // restrict edit mode to admin WP users (root, admin, author)
-      if (urlParams.get('mode') == 'edit' && ['1', '2', '3'].includes(wp_user_id)) {
-        this.mode = 'edit';
-      }
+      if (urlParams.get('mode') == 'edit' // && ['1', '2', '3'].includes(wp_user_id)
+      ) {
+          this.mode = 'edit';
+        }
     }
 
     if (urlParams.has('chapter')) {
@@ -1407,7 +1427,7 @@ var DomainClass = /*#__PURE__*/function () {
   }, {
     key: "evaluate",
     value: function evaluate(context) {
-      console.log('Domain::evaluate', context);
+      // console.log('Domain::evaluate', context);
       if (!this.clauses.length) return true;
       var res = false; // evaluate clauses (OR) and conditions (AND)
 
@@ -1906,8 +1926,8 @@ var GroupClass = /*#__PURE__*/function () {
     value: function render(context) {
       var _this = this;
 
-      console.log("GroupClass::render", this); // this.setContext(context);
-
+      // console.log("GroupClass::render", this);
+      // this.setContext(context);
       var group_classes = 'group ';
       var row_span = 1;
       var direction = 'vertical';
@@ -1950,12 +1970,15 @@ var GroupClass = /*#__PURE__*/function () {
         }
       } else {
         var $actions = (0, _jqueryLib.$)('<div class="actions group-actions"></div>');
+        var $group_actions_label = (0, _jqueryLib.$)('<div class="label"></div>');
+        var $group_actions_label_text = (0, _jqueryLib.$)('<span>Group ' + this.order + '</span>');
         var $edit_button = (0, _jqueryLib.$)('<div class="action-button group-edit-button" title="Edit Group"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
         var $add_button = (0, _jqueryLib.$)('<div class="action-button group-add-button" title="Add a Widget"><span class="material-icons mdc-fab__icon">add</span></div>');
         var $move_up_button = (0, _jqueryLib.$)('<div class="action-button group-add-button" title="Move Group up"><span class="material-icons mdc-fab__icon">keyboard_arrow_up</span></div>');
         var $move_down_button = (0, _jqueryLib.$)('<div class="action-button group-add-button" title="Move Group down"><span class="material-icons mdc-fab__icon">keyboard_arrow_down</span></div>');
         var $delete_button = (0, _jqueryLib.$)('<div class="action-button group-delete-button" title="Delete Group"><span class="material-icons mdc-fab__icon">delete</span></div>');
-        $actions.append($edit_button).append($add_button).append($move_up_button).append($move_down_button).append($delete_button);
+        $group_actions_label.append($group_actions_label_text);
+        $actions.append($edit_button, $add_button, $move_up_button, $move_down_button, $delete_button, $group_actions_label);
         $edit_button.on('click', function () {
           window.eq.popup({
             entity: 'learn\\Group',
@@ -2063,8 +2086,7 @@ var GroupClass = /*#__PURE__*/function () {
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
-      console.log('Group::propagateContext', this, contextChange);
-
+      // console.log('Group::propagateContext', this, contextChange);
       for (var _i3 = 0, _Object$keys3 = Object.keys(contextChange); _i3 < _Object$keys3.length; _i3++) {
         var elem = _Object$keys3[_i3];
 
@@ -2116,8 +2138,7 @@ var GroupClass = /*#__PURE__*/function () {
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
-      console.log('Group::onContextChange', contextChange);
-
+      // console.log('Group::onContextChange', contextChange);
       for (var _i4 = 0, _Object$keys4 = Object.keys(contextChange); _i4 < _Object$keys4.length; _i4++) {
         var elem = _Object$keys4[_i4];
 
@@ -2247,6 +2268,7 @@ var LeafClass = /*#__PURE__*/function () {
     });
     this.id = id;
     this.identifier = identifier;
+    this.order = order;
     this.groups = groups;
     this.visible = visible;
     this.background_image = background_image;
@@ -2294,8 +2316,9 @@ var LeafClass = /*#__PURE__*/function () {
 
       var is_single = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var context = arguments.length > 1 ? arguments[1] : undefined;
-      console.log("LeafClass::render", this, context); //        this.setContext(context);
 
+      // console.log("LeafClass::render", this, context);
+      //        this.setContext(context);
       if (is_single) {
         this.$container.addClass('full');
       }
@@ -2559,6 +2582,12 @@ var LeafClass = /*#__PURE__*/function () {
       } else {
         var $actions = (0, _jqueryLib.$)('<div class="actions leaf-actions"></div>');
         var $edit_button = (0, _jqueryLib.$)('<div class="action-button leaf-edit-button" title="Edit Leaf"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
+        var $add_button = (0, _jqueryLib.$)('<div class="action-button leaf-add-button" title="Add a Group"><span class="material-icons mdc-fab__icon">add</span></div>');
+        var $delete_button = (0, _jqueryLib.$)('<div class="action-button leaf-delete-button" title="Delete Leaf"><span class="material-icons mdc-fab__icon">delete</span></div>');
+        var $leaf_actions_label = (0, _jqueryLib.$)('<div class="label"></div>');
+        var $leaf_actions_label_text = (0, _jqueryLib.$)('<span>Leaf ' + this.order + '</span>');
+        $leaf_actions_label.append($leaf_actions_label_text);
+        $actions.append($edit_button, $add_button, $delete_button, $leaf_actions_label);
         $edit_button.on('click', function () {
           window.eq.popup({
             entity: 'learn\\Leaf',
@@ -2596,7 +2625,6 @@ var LeafClass = /*#__PURE__*/function () {
             }
           });
         });
-        var $add_button = (0, _jqueryLib.$)('<div class="action-button leaf-add-button" title="Add a Group"><span class="material-icons mdc-fab__icon">add</span></div>');
         $add_button.on('click', function () {
           var group_identifier = _this.groups ? _this.groups.length + 1 : 1;
           window.eq.popup({
@@ -2637,7 +2665,6 @@ var LeafClass = /*#__PURE__*/function () {
             }
           });
         });
-        var $delete_button = (0, _jqueryLib.$)('<div class="action-button leaf-delete-button" title="Delete Leaf"><span class="material-icons mdc-fab__icon">delete</span></div>');
         $delete_button.on('click', function () {
           if (window.confirm("Leaf is about to be removed. Do you confirm ?")) {
             _qursusServices.ApiService.delete('learn\\Leaf', [_this.id], true);
@@ -2648,9 +2675,6 @@ var LeafClass = /*#__PURE__*/function () {
             });
           }
         });
-        $actions.append($edit_button);
-        $actions.append($add_button);
-        $actions.append($delete_button);
         this.$container.append($actions);
       }
 
@@ -2660,8 +2684,7 @@ var LeafClass = /*#__PURE__*/function () {
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
-      console.log('Leaf::propagateContext', contextChange);
-
+      // console.log('Leaf::propagateContext', contextChange);
       for (var _i5 = 0, _Object$keys3 = Object.keys(contextChange); _i5 < _Object$keys3.length; _i5++) {
         var elem = _Object$keys3[_i5];
 
@@ -2780,8 +2803,7 @@ var LeafClass = /*#__PURE__*/function () {
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
-      console.log('Leaf::onContextChange', this, contextChange);
-
+      // console.log('Leaf::onContextChange', this, contextChange);
       for (var _i6 = 0, _Object$keys4 = Object.keys(contextChange); _i6 < _Object$keys4.length; _i6++) {
         var elem = _Object$keys4[_i6];
 
@@ -2837,6 +2859,73 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "./build/LearningAppMessage.js":
+/*!*************************************!*\
+  !*** ./build/LearningAppMessage.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.LearningAppMessage = exports.MessageEventEnum = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
+
+var MessageEventEnum;
+exports.MessageEventEnum = MessageEventEnum;
+
+(function (MessageEventEnum) {
+  MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
+  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
+  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
+})(MessageEventEnum || (exports.MessageEventEnum = MessageEventEnum = {}));
+
+/**
+ * Class for sending messages to the parent window.
+ */
+var LearningAppMessage = /*#__PURE__*/function () {
+  function LearningAppMessage() {
+    (0, _classCallCheck2.default)(this, LearningAppMessage);
+  }
+
+  (0, _createClass2.default)(LearningAppMessage, null, [{
+    key: "send",
+    value:
+    /**
+     * Send a message to the parent window.
+     *
+     * @param data
+     */
+    function send(data) {
+      window.parent.postMessage(data, '*');
+    }
+    /**
+     * Send a message to the parent window for telling that the learning app has received a click event / interaction.
+     */
+
+  }, {
+    key: "sendLearningClickEvent",
+    value: function sendLearningClickEvent() {
+      window.addEventListener('click', function () {
+        window.parent.postMessage('qursus_click_event', '*');
+      });
+    }
+  }]);
+  return LearningAppMessage;
+}();
+
+exports.LearningAppMessage = LearningAppMessage;
+
+/***/ }),
+
 /***/ "./build/Module.class.js":
 /*!*******************************!*\
   !*** ./build/Module.class.js ***!
@@ -2871,6 +2960,8 @@ var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qurs
 
 var _Chapter = __webpack_require__(/*! ./Chapter.class */ "./build/Chapter.class.js");
 
+var _LearningAppMessage = __webpack_require__(/*! ./LearningAppMessage */ "./build/LearningAppMessage.js");
+
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2881,9 +2972,17 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
+var MessageEventEnum;
 /**
  *
  */
+
+(function (MessageEventEnum) {
+  MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
+  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
+  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
+})(MessageEventEnum || (MessageEventEnum = {}));
+
 var ModuleClass = /*#__PURE__*/function () {
   function ModuleClass() {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -2926,7 +3025,7 @@ var ModuleClass = /*#__PURE__*/function () {
   (0, _createClass2.default)(ModuleClass, [{
     key: "setContext",
     value: function setContext(context) {
-      console.log('Module::setContext', context);
+      // console.log('Module::setContext', context);
       this.context = _objectSpread(_objectSpread({}, this.context), context);
     }
   }, {
@@ -2976,7 +3075,12 @@ var ModuleClass = /*#__PURE__*/function () {
       var $next = (0, _jqueryLib.$)('<div class="page-nav-next page-nav"><i class="arrow material-icons">chevron_right</i></div>').on('click', function () {
         var chapter_context = _this.chapters[_this.context.chapter_index].getContext();
 
-        console.log('page-nav-next::click', _this.context, chapter_context, _this.chapters[_this.context.chapter_index].pages.length); // next page
+        console.log('page-nav-next::click', _this.context, chapter_context, _this.chapters[_this.context.chapter_index].pages.length); //
+        // if (this.context.mode === 'view' && ++(Object.freeze({...chapter_context})).page_index === this.chapters[this.context.chapter_index].pages.length) {
+        //     console.log('You have finished this chapter');
+        //     window.parent.window.alert('You have finished this chapter');
+        // }
+        // next page
 
         if (chapter_context.page_index + 1 < _this.chapters[_this.context.chapter_index].pages.length) {
           (0, _jqueryLib.$)('body').find('.section-container').remove();
@@ -3019,10 +3123,19 @@ var ModuleClass = /*#__PURE__*/function () {
 
 
         if (_this.context.mode == 'view') {
-          _qursusServices.ApiService.fetch('/?do=learn_next', {
+          _qursusServices.ApiService.fetch('?do=learn_next', {
             module_id: _this.id,
             chapter_index: _this.context.chapter_index,
             page_index: _this.context.page_index
+          });
+
+          _LearningAppMessage.LearningAppMessage.send({
+            type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
+            data: {
+              module_id: _this.id,
+              chapter_index: _this.context.chapter_index,
+              page_index: _this.context.page_index
+            }
           });
         }
       });
@@ -3035,12 +3148,15 @@ var ModuleClass = /*#__PURE__*/function () {
          append controls to module container
         */
 
-        var $module_controls = (0, _jqueryLib.$)('<div class="controls module-controls"><div class="label">Module ' + this.identifier + '</div></div>');
+        var $module_controls = (0, _jqueryLib.$)('<div class="controls module-controls"></div>');
+        var $module_label = (0, _jqueryLib.$)('<div class="label"></div>');
+        var $module_label_text = (0, _jqueryLib.$)('<span>Module ' + this.identifier + '</span>');
         var $module_actions = (0, _jqueryLib.$)('<div class="actions module-actions"></div>');
         var $module_edit_button = (0, _jqueryLib.$)('<div class="action-button module-edit-button" title="Edit Module"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
         var $module_add_button = (0, _jqueryLib.$)('<div class="action-button module-add-button" title="Add a Chapter"><span class="material-icons mdc-fab__icon">add</span></div>');
         $module_actions.append($module_edit_button).append($module_add_button);
-        $module_controls.append($module_actions);
+        $module_label.append($module_label_text).append($module_actions);
+        $module_controls.append($module_label);
         $module_controls.appendTo(this.$container);
         /*
          setup action handlers
@@ -3191,8 +3307,7 @@ var ModuleClass = /*#__PURE__*/function () {
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
-      console.log('Module::propagateContext', contextChange, this.context, this.chapters);
-
+      // console.log('Module::propagateContext', contextChange, this.context, this.chapters);
       for (var _i2 = 0, _Object$keys2 = Object.keys(contextChange); _i2 < _Object$keys2.length; _i2++) {
         var elem = _Object$keys2[_i2];
 
@@ -3275,13 +3390,13 @@ var ModuleClass = /*#__PURE__*/function () {
   }, {
     key: "render",
     value: function render() {
-      console.log("Module::render()", this.context);
-
+      // console.log("Module::render()", this.context);
       if (this.context.mode == 'edit') {
         this.$container.addClass('_edit');
       } else {
         this.$container.removeClass('_edit');
-      }
+      } // console.log('Module::render', this.context, this.chapters, this.context.chapter_index, this.chapters[this.context.chapter_index]);
+
 
       if (this.chapters && this.chapters.length) {
         var item = this.chapters[this.context.chapter_index];
@@ -3332,9 +3447,9 @@ var _Leaf = __webpack_require__(/*! ./Leaf.class */ "./build/Leaf.class.js");
 
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
 
-var _Chapter = __webpack_require__(/*! ./Chapter.class */ "./build/Chapter.class.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
+
+var _LearningAppMessage = __webpack_require__(/*! ./LearningAppMessage */ "./build/LearningAppMessage.js");
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
@@ -3342,9 +3457,17 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+var MessageEventEnum;
 /**
  *
  */
+
+(function (MessageEventEnum) {
+  MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
+  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
+  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
+})(MessageEventEnum || (MessageEventEnum = {}));
+
 var PageClass = /*#__PURE__*/function () {
   function PageClass() // domain
   {
@@ -3417,8 +3540,8 @@ var PageClass = /*#__PURE__*/function () {
     value: function render(context) {
       var _this = this;
 
-      console.log("PageClass::render", this); //        this.setContext(context);
-
+      // console.log("PageClass::render", this);
+      //        this.setContext(context);
       var is_single = true;
 
       if (this.leaves && this.leaves.length) {
@@ -3445,11 +3568,9 @@ var PageClass = /*#__PURE__*/function () {
           this.$container.append(leaf.render(is_single, context));
 
           if (this.next_active && !this.next_active.length) {
-            if (this.parent instanceof _Chapter.ChapterClass) {
-              this.parent.propagateContextChange({
-                '$module.next_active': true
-              });
-            }
+            this.parent.propagateContextChange({
+              '$module.next_active': true
+            });
           }
         }
       }
@@ -3462,33 +3583,24 @@ var PageClass = /*#__PURE__*/function () {
          append controls to module container
         */
         // remove any previously rendered controls
-        if (this.parent instanceof _Chapter.ChapterClass) {
-          this.parent.getParent().getContainer().find('.controls.page-controls').remove();
-        }
-
-        var $page_controls = (0, _jqueryLib.$)('<div class="controls page-controls"><div class="label">Page ' + this.identifier + '</div></div>');
+        this.parent.getParent().getContainer().find('.controls.page-controls').remove();
         var $page_actions = (0, _jqueryLib.$)('<div class="actions page-actions"></div>');
+        var $page_controls = (0, _jqueryLib.$)('<div class="controls page-controls"></div>');
+        var $page_label = (0, _jqueryLib.$)('<div class="label"></div>');
+        var $page_label_text = (0, _jqueryLib.$)('<span>Page ' + this.identifier + '</span>');
         var $page_edit_button = (0, _jqueryLib.$)('<div class="action-button page-edit-button" title="Edit Page"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
         var $page_add_button = (0, _jqueryLib.$)('<div class="action-button page-add-button" title="Add a Leaf"><span class="material-icons mdc-fab__icon">add</span></div>');
-        var $page_add_sect_button = (0, _jqueryLib.$)('<div class="action-button page-add_sect-button" title="Add a Section"><span class="material-icons mdc-fab__icon">library_add</span></div>');
         var $page_delete_button = (0, _jqueryLib.$)('<div class="action-button page-delete-button" title="Delete Page"><span class="material-icons mdc-fab__icon">delete</span></div>');
         $page_actions.append($page_edit_button);
         $page_actions.append($page_add_button);
-
-        if (this.parent instanceof _Chapter.ChapterClass) {
-          $page_actions.append($page_add_sect_button);
-        }
-
         $page_actions.append($page_delete_button);
-        $page_controls.append($page_actions);
-
-        if (this.parent instanceof _Chapter.ChapterClass) {
-          $page_controls.appendTo(this.parent.getParent().getContainer());
-        }
+        $page_label.append($page_label_text);
+        $page_label.append($page_actions);
+        $page_controls.append($page_label);
+        $page_controls.appendTo(this.parent.getParent().getContainer());
         /*
          setup action handlers
         */
-
 
         $page_edit_button.on('click', function () {
           window.eq.popup({
@@ -3521,11 +3633,9 @@ var PageClass = /*#__PURE__*/function () {
                   _iterator.f();
                 }
 
-                if (_this.parent instanceof _Chapter.ChapterClass) {
-                  _this.parent.propagateContextChange({
-                    refresh: true
-                  });
-                }
+                _this.parent.propagateContextChange({
+                  refresh: true
+                });
               }
             }
           });
@@ -3573,16 +3683,23 @@ var PageClass = /*#__PURE__*/function () {
           if (window.confirm("Page is about to be removed. Do you confirm ?")) {
             _this.parent.getParent().getContainer().find('.controls.page-controls').remove();
 
-            if (_this.parent instanceof _Chapter.ChapterClass) {
-              _qursusServices.ApiService.update('learn\\Chapter', [_this.parent.id], {
-                'pages_ids': [-_this.id]
-              }, true);
+            _qursusServices.ApiService.update('learn\\Chapter', [_this.parent.id], {
+              'pages_ids': [_this.id]
+            }, true);
 
-              _this.parent.propagateContextChange({
-                '$chapter.remove_page': _this.id,
-                refresh: true
-              });
-            }
+            _this.parent.propagateContextChange({
+              '$chapter.remove_page': _this.id,
+              refresh: true
+            });
+
+            _LearningAppMessage.LearningAppMessage.send({
+              type: MessageEventEnum.PAGE_REMOVED,
+              data: {
+                page_id: _this.id,
+                chapter_id: _this.parent.id,
+                module_id: _this.parent.getParent().id
+              }
+            });
           }
         });
       }
@@ -3597,8 +3714,7 @@ var PageClass = /*#__PURE__*/function () {
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
-      console.log('Page::propagateContext', contextChange);
-
+      // console.log('Page::propagateContext', contextChange);
       for (var _i4 = 0, _Object$keys4 = Object.keys(contextChange); _i4 < _Object$keys4.length; _i4++) {
         var elem = _Object$keys4[_i4];
 
@@ -3648,11 +3764,7 @@ var PageClass = /*#__PURE__*/function () {
         }
       }
 
-      if (this.parent instanceof _Chapter.ChapterClass) {
-        this.parent.propagateContextChange(contextChange);
-      } else {
-        this.onContextChange(contextChange);
-      }
+      this.parent.propagateContextChange(contextChange);
     }
     /**
      * Changes received from parent
@@ -3662,8 +3774,7 @@ var PageClass = /*#__PURE__*/function () {
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
-      console.log('Page::onContextChange', contextChange);
-
+      // console.log('Page::onContextChange', contextChange);
       for (var _i5 = 0, _Object$keys5 = Object.keys(contextChange); _i5 < _Object$keys5.length; _i5++) {
         var elem = _Object$keys5[_i5];
 
@@ -3737,6 +3848,8 @@ var _Module = __webpack_require__(/*! ./Module.class */ "./build/Module.class.js
 
 var _Course = __webpack_require__(/*! ./Course.class */ "./build/Course.class.js");
 
+var _LearningAppMessage = __webpack_require__(/*! ./LearningAppMessage */ "./build/LearningAppMessage.js");
+
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -3751,10 +3864,11 @@ var Qursus = /*#__PURE__*/function () {
   function Qursus() {
     (0, _classCallCheck2.default)(this, Qursus);
     (0, _defineProperty2.default)(this, "module", void 0);
-    (0, _defineProperty2.default)(this, "pack", void 0);
+    (0, _defineProperty2.default)(this, "course", void 0);
     (0, _defineProperty2.default)(this, "languages", ['en']);
-    console.log("Qursus::constructor");
     this.onload();
+
+    _LearningAppMessage.LearningAppMessage.sendLearningClickEvent();
   }
 
   (0, _createClass2.default)(Qursus, [{
@@ -3773,15 +3887,11 @@ var Qursus = /*#__PURE__*/function () {
                 environment = _context.sent;
                 _context.next = 5;
                 return _jqueryLib.$.getJSON("environment.json", function (json) {
-                  console.log("found environment file", json);
-
                   for (var field in json) {
                     if (environment.hasOwnProperty(field)) {
                       environment[field] = json[field];
                     }
                   }
-
-                  console.log(environment);
                 }).fail(function (response) {
                   console.log("no environment file found");
                 });
@@ -3840,7 +3950,7 @@ var Qursus = /*#__PURE__*/function () {
                 _environment = _context2.sent;
 
                 _jqueryLib.$.getJSON(_environment.backend_url + "?get=learn_module&id=" + _qursusServices.ContextService.module_id + '&lang=' + _environment.lang, function (json) {
-                  _this.pack = new _Course.CourseClass(json.course_id.id, json.course_id.name, json.course_id.subtitle, json.course_id.title, json.course_id.description);
+                  _this.course = new _Course.CourseClass(json.course_id.id, json.course_id.name, json.course_id.subtitle, json.course_id.title, json.course_id.description);
                   _this.module = new _Module.ModuleClass(json.id, json.identifier, json.order, json.name, json.title, json.description, json.duration, json.chapters);
 
                   if (json.course_id && json.course_id.langs_ids) {
@@ -3857,12 +3967,12 @@ var Qursus = /*#__PURE__*/function () {
 
                   (0, _jqueryLib.$)('.spinner-wrapper').hide();
                   (0, _jqueryLib.$)('body').addClass(_qursusServices.ContextService.mode);
-                  (0, _jqueryLib.$)('.menu-top').find('.cell-program').text(_this.pack.title);
+                  (0, _jqueryLib.$)('.menu-top').find('.cell-program').text(_this.course.title);
                   (0, _jqueryLib.$)('.menu-top').find('.cell-module').text('Module ' + _this.module.identifier);
 
                   _this.module.render();
 
-                  (0, _jqueryLib.$)('.menu-top .inner .left-cell a').attr('href', '/product/' + _this.pack.name);
+                  (0, _jqueryLib.$)('.menu-top .inner .left-cell a').attr('href', '/product/' + _this.course.name);
                   var $lang_select = (0, _jqueryLib.$)('<select>').on('change', function (event) {
                     return _this.onchangeLang(event);
                   });
@@ -3888,7 +3998,7 @@ var Qursus = /*#__PURE__*/function () {
 
                   (0, _jqueryLib.$)('.menu-top .middle-cell').empty().append($lang_select);
                 }).fail(function (response) {
-                  console.log('unexpected error', response);
+                  console.log('Qursus.init => JQueryStatic.getJSON => unexpected error', response);
                   var error_id = 'unknown_error';
 
                   if (response.responseJSON && response.responseJSON.errors) {
@@ -4116,8 +4226,8 @@ var WidgetClass = /*#__PURE__*/function () {
     value: function render(context) {
       var _this = this;
 
-      console.log("WidgetClass::render", this); // this.setContext(context);
-
+      // console.log("WidgetClass::render", this);
+      // this.setContext(context);
       var content = this.content;
       var widget_classes = 'widget';
       widget_classes += ' type-' + this.type;
@@ -4283,7 +4393,7 @@ var WidgetClass = /*#__PURE__*/function () {
 
             if (this.type == 'sound' && this.sound_url && this.sound_url.length) {
               this.$container.on('click', function () {
-                console.log('playing sound');
+                // console.log('playing sound');
                 var sound = new Audio(_this.sound_url);
                 sound.play();
               });
@@ -4350,9 +4460,12 @@ var WidgetClass = /*#__PURE__*/function () {
 
       if (context.mode == 'edit') {
         var $actions = (0, _jqueryLib.$)('<div class="actions widget-actions"></div>');
+        var $widget_actions_label = (0, _jqueryLib.$)('<div class="label"></div>');
+        var $widget_actions_label_text = (0, _jqueryLib.$)('<span>Widget ' + this.order + '</span>');
         var $edit_button = (0, _jqueryLib.$)('<div class="action-button widget-edit-button" title="Edit Widget"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
         var $delete_button = (0, _jqueryLib.$)('<div class="action-button widget-delete-button" title="Delete Widget"><span class="material-icons mdc-fab__icon">delete</span></div>');
-        $actions.append($edit_button).append($delete_button);
+        $widget_actions_label.append($widget_actions_label_text);
+        $actions.append($edit_button, $delete_button, $widget_actions_label);
         $edit_button.on('click', /*#__PURE__*/(0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
           var environment;
           return _regenerator.default.wrap(function _callee$(_context) {
@@ -4432,8 +4545,7 @@ var WidgetClass = /*#__PURE__*/function () {
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
-      console.log('Widget::onContextChange', contextChange);
-
+      // console.log('Widget::onContextChange', contextChange);
       for (var _i3 = 0, _Object$keys3 = Object.keys(contextChange); _i3 < _Object$keys3.length; _i3++) {
         var elem = _Object$keys3[_i3];
 
