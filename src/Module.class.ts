@@ -178,15 +178,10 @@ export class ModuleClass {
                     }
                 });
 
-                if (this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1) {
-                    LearningAppMessage.send({
-                        type: MessageEventEnum.CHAPTER_PROGRESSION_FINISHED,
-                        data: {
-                            chapter_index: this.context.chapter_index
-                        }
-                    })
-                } else if (this.context.chapter_index === this.chapters.length - 1 &&
-                    this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1) {
+                if (
+                    this.context.chapter_index === this.chapters.length - 1 &&
+                    this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1
+                ) {
                     LearningAppMessage.send({
                         type: MessageEventEnum.MODULE_PROGRESSION_FINISHED,
                         data: {
@@ -194,6 +189,13 @@ export class ModuleClass {
                         }
                     })
 
+                } else if (this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1) {
+                    LearningAppMessage.send({
+                        type: MessageEventEnum.CHAPTER_PROGRESSION_FINISHED,
+                        data: {
+                            chapter_index: this.context.chapter_index
+                        }
+                    })
                 }
             }
         });
