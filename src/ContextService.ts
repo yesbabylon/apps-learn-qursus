@@ -1,5 +1,4 @@
-import { $ } from "./jquery-lib";
-
+// Todo: AlexisVS: Script poisoned by WordPress options
 export class _ContextService {
 
     public module_id: number = 1;           // module identifier (id field)
@@ -10,9 +9,9 @@ export class _ContextService {
 
     public user_allowed: boolean = true;
 
-    constructor() {
 
-        let wp_user_id = this.getCookieValue('wp_lms_user');
+    constructor() {
+        // let wp_user_id = this.getCookieValue('wp_lms_user');
         /*
         if(wp_user_id === undefined) {
             // prevent running app
@@ -20,23 +19,26 @@ export class _ContextService {
         }
         */
 
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
+        const queryString: string = window.location.search;
+        const urlParams: URLSearchParams = new URLSearchParams(queryString);
 
-        if(urlParams.has('module')) {
+        if (urlParams.has('module')) {
             this.module_id = parseInt(urlParams.get('module'));
         }
 
-        if(urlParams.has('mode')) {
+        if (urlParams.has('mode')) {
             // restrict edit mode to admin WP users (root, admin, author)
-            if(urlParams.get('mode') == 'edit' && ['1', '2', '3'].includes(wp_user_id)) {
+            if (
+                urlParams.get('mode') == 'edit'
+                // && ['1', '2', '3'].includes(wp_user_id)
+            ) {
                 this.mode = 'edit';
             }
         }
 
-        if(urlParams.has('chapter')) {
+        if (urlParams.has('chapter')) {
             this.chapter_index = parseInt(urlParams.get('chapter'));
-            if(urlParams.has('page')) {
+            if (urlParams.has('page')) {
                 this.page_index = parseInt(urlParams.get('page'));
             }
         }
@@ -44,14 +46,13 @@ export class _ContextService {
     }
 
 
-    private getCookieValue(name:string):string|undefined {
+    private getCookieValue(name: string): string | undefined {
         // document.cookie = "wp_lms_user=1;path=/";
         return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || undefined;
     }
 
 
 }
-
 
 
 export default _ContextService;

@@ -1,22 +1,14 @@
-import { $ } from "./jquery-lib";
-
-import { ApiService } from "./qursus-services";
-
-
-/**
- * 
- */
-export class PackClass {
+export class CourseClass {
     public id: number;
     public name: string;               // (ex. PDT, AT)
-    public subtitle: string;           // (ex. Duration: 15 minutes)
+    public subtitle: string;           // (ex. Duration : 15 minutes)
     public title: string;              // (ex. Program Development Training, Awareness Training)
     public description: string;
 
     constructor(
         id: number,
         name: string,               // (ex. PDT, AT)
-        subtitle: string,           // (ex. Duration: 15 minutes)
+        subtitle: string,           // (ex. Duration : 15 minutes)
         title: string,              // (ex. Program Development Training, Awareness Training)
         description: string
     ) {
@@ -26,8 +18,6 @@ export class PackClass {
         this.title = title;
         this.description = description;
     }
-
-    
 }
 
-export default PackClass;
+export default CourseClass;
