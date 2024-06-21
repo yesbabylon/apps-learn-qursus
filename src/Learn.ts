@@ -71,11 +71,11 @@ class Learn {
                 this.module.init();
                 $('.spinner-wrapper').hide();
                 $('body').addClass(ContextService.mode);
-                $('.menu-top').find('.cell-program').text(this.course.title);
-                $('.menu-top').find('.cell-module').text('Module ' + this.module.identifier);
+                // $('.menu-top').find('.cell-program').text(this.course.title);
+                // $('.menu-top').find('.cell-module').text('Module ' + this.module.identifier);
                 this.module.render();
 
-                $('.menu-top .inner .left-cell a').attr('href', '/product/' + this.course.name);
+                // $('.menu-top .inner .left-cell a').attr('href', '/product/' + this.course.name);
 
                 let $lang_select = $('<select>').on('change', (event: any) => this.onchangeLang(event));
                 for (let lang of this.languages) {
@@ -86,7 +86,7 @@ class Learn {
                     }
                 }
 
-                $('.menu-top .middle-cell').empty().append($lang_select);
+                // $('.menu-top .middle-cell').empty().append($lang_select);
 
             })
                 .fail((response: any): void => {

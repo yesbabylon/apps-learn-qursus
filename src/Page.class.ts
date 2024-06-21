@@ -231,7 +231,53 @@ export class PageClass {
                     })
                 }
             });
+
+            /*
+            * Add scroll event on X axis if the number of leaves on the page is more than 2
+            */
+            const handleContainerInnerWheelEvent = (event: WheelEvent): void => {
+                const containerInner: HTMLElement = $('.container-inner').get(0);
+
+                let leaves_count = containerInner.querySelectorAll(' .leaf-container').length;
+
+                console.log('leaves_count', leaves_count)
+                if (leaves_count <= 2) {
+                    containerInner.style.transition = '';
+                    containerInner.style.transform = '';
+                    return;
+                }
+                containerInner.style.transition = 'transform 0.15s ease';
+
+                /** scroll factor (velocity) */
+                const scroll_factor = 7.5;
+
+                /** negative top and positif bottom */
+                const wheel_delta_event = (event as WheelEvent).deltaY < 0 ? 1 : -1;
+
+                const current_transform = containerInner.style.transform;
+                const current_transform_value = current_transform
+                    ? parseInt(current_transform.split('translateX(')[1].split('%)')[0])
+                    : 0;
+
+                // the containerInner need to be always visible it needs to have at minimum 10% of visibility on the screen
+
+                const new_transform_value = current_transform_value + (wheel_delta_event * scroll_factor) + '%';
+
+                containerInner.style.transform = `translateX(${new_transform_value})`;
+            }
+
+            const containerInner: HTMLElement = $('.container-inner').get(0);
+
+            containerInner.addEventListener('wheel', handleContainerInnerWheelEvent, {
+                passive: true
+            });
+
+            if (this.leaves.length < 3) {
+                containerInner.style.transform = '';
+                containerInner.style.transition = '';
+            }
         }
+
         return this.$container;
     }
 
