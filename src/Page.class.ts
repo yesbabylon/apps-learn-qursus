@@ -3,16 +3,7 @@ import {LeafClass} from "./Leaf.class";
 import {DomainClass} from "./Domain.class";
 import {ChapterClass} from "./Chapter.class";
 import {ApiService} from "./qursus-services";
-import {LearningAppMessage} from "./LearningAppMessage";
-
-
-enum MessageEventEnum {
-    EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
-    CHAPTER_REMOVED = 'chapter_removed',
-    PAGE_REMOVED = 'page_removed',
-    CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
-    MODULE_PROGRESSION_FINISHED = 'module_progression_finished',
-}
+import {LearningAppMessage, MessageEventEnum} from "./LearningAppMessage";
 
 /**
  *
@@ -222,7 +213,7 @@ export class PageClass {
                     this.parent.propagateContextChange({'$chapter.remove_page': this.id, refresh: true});
 
                     LearningAppMessage.send({
-                        type: MessageEventEnum.PAGE_REMOVED,
+                        type: MessageEventEnum.QU_PAGE_REMOVED,
                         data: {
                             page_id: this.id,
                             chapter_id: this.parent.id,

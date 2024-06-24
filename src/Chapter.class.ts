@@ -2,15 +2,7 @@ import {$} from "./jquery-lib";
 import {PageClass} from "./Page.class";
 import {ApiService} from "./qursus-services";
 import ModuleClass from "./Module.class";
-import {LearningAppMessage} from "./LearningAppMessage";
-
-export enum MessageEventEnum {
-    EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
-    CHAPTER_REMOVED = 'chapter_removed',
-    PAGE_REMOVED = 'page_removed',
-    CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
-    MODULE_PROGRESSION_FINISHED = 'module_progression_finished',
-}
+import {LearningAppMessage, MessageEventEnum} from "./LearningAppMessage";
 
 export class ChapterClass {
     // allow virtual keys for dynamic assignment after API updates (we make sure to only use keys defined below)
@@ -189,7 +181,7 @@ export class ChapterClass {
                     this.parent.propagateContextChange({'$module.remove_chapter': this.id, refresh: true});
 
                     LearningAppMessage.send({
-                        type: MessageEventEnum.CHAPTER_REMOVED,
+                        type: MessageEventEnum.QU_CHAPTER_REMOVED,
                         data: {
                             module_id: this.parent.id,
                             chapter_id: this.id
