@@ -264,7 +264,16 @@ export class ModuleClass {
                                 }
                                 this.chapters.push(chapter);
                             }
+                            this.context.chapter_index = this.chapters.length - 1;
                             this.propagateContextChange({refresh: true});
+
+                            LearningAppMessage.send({
+                                type: MessageEventEnum.QU_CHAPTER_ADDED,
+                                data: {
+                                    module_id: this.id,
+                                    chapter_id: data.objects[0].id
+                                }
+                            });
                         }
                     }
                 });

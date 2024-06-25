@@ -592,8 +592,12 @@ body {
 }
 
 .viewport-container._edit .actions:hover {
-    width: max-content;
+    width: 78px;
     opacity: 1;
+}
+
+.viewport-container._edit .actions.module-actions:hover {
+    width: 54px;
 }
 
 .viewport-container._edit .leaf-container .leaf-actions {

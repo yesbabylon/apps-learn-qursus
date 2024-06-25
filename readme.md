@@ -29,7 +29,7 @@ I think than the best worflow for qursus will be to use the application like thi
     - [ ] Verify the behavior of the page.
     - [ ] Verify the behavior of the options.
 
-
+    
 - [ ] Create a new Widget
     - [ ] Verify the behavior of the page.
     - [ ] Verify the behavior of the options.

@@ -178,6 +178,7 @@ export class ChapterClass {
             $chapter_delete_button.on('click', () => {
                 if (window.confirm("Chapter is about to be removed. Do you confirm ?")) {
                     ApiService.update('learn\\Module', [this.parent.id], {'chapters_ids': [-this.id]}, true);
+                    this.parent.context.chapter_index = this.parent.chapters.findIndex(chapter => chapter.id === this.id) - 1;
                     this.parent.propagateContextChange({'$module.remove_chapter': this.id, refresh: true});
 
                     LearningAppMessage.send({

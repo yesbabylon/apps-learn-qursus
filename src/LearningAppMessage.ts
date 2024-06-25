@@ -1,6 +1,7 @@
 
 export enum MessageEventEnum {
     EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
+    QU_CHAPTER_ADDED = 'qu_chapter_added',
     QU_CHAPTER_REMOVED = 'qu_chapter_removed',
     QU_PAGE_REMOVED = 'qu_page_removed',
     QU_CHAPTER_PROGRESSION_FINISHED = 'qu_chapter_progression_finished',
