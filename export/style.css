@@ -587,8 +587,12 @@ body {
     overflow: hidden;
     transition: ease all 0.3s;
     width: 28px;
-    opacity: 0.4;
+    opacity: 0.7;
     user-select: none;
+}
+
+.viewport-container .leaf.contrast_dark .widget a {
+    color: #48b1fa;
 }
 
 .viewport-container._edit .actions:hover {
