@@ -469,6 +469,10 @@ body {
     cursor: pointer;
 }
 
+.widget.type-image_popup .image-container > img {
+    object-fit: contain;
+}
+
 .widget.type-chapter_title {
     font-size: 33px;
     font-weight: 800;
