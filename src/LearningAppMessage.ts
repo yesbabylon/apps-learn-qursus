@@ -1,10 +1,11 @@
 
 export enum MessageEventEnum {
     EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
-    CHAPTER_REMOVED = 'chapter_removed',
-    PAGE_REMOVED = 'page_removed',
-    CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
-    MODULE_PROGRESSION_FINISHED = 'module_progression_finished',
+    QU_CHAPTER_ADDED = 'qu_chapter_added',
+    QU_CHAPTER_REMOVED = 'qu_chapter_removed',
+    QU_PAGE_REMOVED = 'qu_page_removed',
+    QU_CHAPTER_PROGRESSION_FINISHED = 'qu_chapter_progression_finished',
+    QU_MODULE_PROGRESSION_FINISHED = 'qu_module_progression_finished',
 }
 
 export type QursusMessageEvent = {

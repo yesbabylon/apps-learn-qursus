@@ -165,7 +165,7 @@ export class WidgetClass {
                         }
                     }
                 }
-                content = '<pre style="background: #282c34; text-align: left; padding: 0 5px; border-radius: 5px;" data-lang="' + target_lang + '">' + window.hljs.highlight(content, {language: target_lang}).value.replace(/\n/g, "<br />") + '</pre>';
+                content = '<pre style="overflow-x: auto;background: #282c34; text-align: left; padding: 0 5px; border-radius: 5px;" data-lang="' + target_lang + '">' + window.hljs.highlight(content, {language: target_lang}).value.replace(/\n/g, "<br />") + '</pre>';
                 break;
             case 'page_title':
             case 'chapter_title':
@@ -212,7 +212,7 @@ export class WidgetClass {
                 break;
             case 'image_popup':
                 let image_url = (this.image_url) ? this.image_url : '';
-                content = "<div class=\"image-container\"><img width=\"100%\" height=\"100%\" src=" + image_url + "></div> ";
+                content = "<div class=\"image-container\"><img width=\"100%\" max-height=\"100%\" src=" + image_url + "></div> ";
                 break;
             case 'first_capital':
                 let first = content.replace('<p>', '').substr(0, 1);
@@ -260,7 +260,7 @@ export class WidgetClass {
                             // use page container to append a full page image
                             let $leafContainer = this.parent.getParent().getParent().getContainer();
                             let $imageContainer = $('<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 1;"></div>');
-                            let $image = $('<img style="height: 100%; width: 100%;" src="' + this.image_url + '" />').appendTo($imageContainer);
+                            let $image = $('<img style="max-height: 100%; width: 100%;" src="' + this.image_url + '" />').appendTo($imageContainer);
                             let $closeBtn = $('<div style="position: absolute; top: 10px; right: 10px; z-index: 2; cursor: pointer; border: solid 1px black; border-radius: 50%; width: 30px; height: 30px; background-color:white;"><i class="material-icons" style="width: 100%;text-align: center;margin-top: 2px;">close</i></div>').appendTo($imageContainer);
                             $leafContainer.append($imageContainer);
                             $closeBtn.on('click', () => {

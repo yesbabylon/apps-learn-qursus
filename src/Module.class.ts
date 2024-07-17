@@ -3,20 +3,12 @@ import {$} from "./jquery-lib";
 import {ApiService, EnvService} from "./qursus-services";
 
 import {ChapterClass} from "./Chapter.class";
-import {LearningAppMessage} from "./LearningAppMessage";
+import {LearningAppMessage, MessageEventEnum} from "./LearningAppMessage";
 
 declare global {
     interface Window {
         eq: any;
     }
-}
-
-enum MessageEventEnum {
-    EQ_ACTION_LEARN_NEXT = 'eq_action_learn_next',
-    CHAPTER_REMOVED = 'chapter_removed',
-    PAGE_REMOVED = 'page_removed',
-    CHAPTER_PROGRESSION_FINISHED = 'chapter_progression_finished',
-    MODULE_PROGRESSION_FINISHED = 'module_progression_finished',
 }
 
 /**
@@ -183,7 +175,7 @@ export class ModuleClass {
                     this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1
                 ) {
                     LearningAppMessage.send({
-                        type: MessageEventEnum.MODULE_PROGRESSION_FINISHED,
+                        type: MessageEventEnum.QU_MODULE_PROGRESSION_FINISHED,
                         data: {
                             module_id: this.id
                         }
@@ -191,7 +183,7 @@ export class ModuleClass {
 
                 } else if (this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1) {
                     LearningAppMessage.send({
-                        type: MessageEventEnum.CHAPTER_PROGRESSION_FINISHED,
+                        type: MessageEventEnum.QU_CHAPTER_PROGRESSION_FINISHED,
                         data: {
                             chapter_index: this.context.chapter_index
                         }
@@ -272,7 +264,16 @@ export class ModuleClass {
                                 }
                                 this.chapters.push(chapter);
                             }
+                            this.context.chapter_index = this.chapters.length - 1;
                             this.propagateContextChange({refresh: true});
+
+                            LearningAppMessage.send({
+                                type: MessageEventEnum.QU_CHAPTER_ADDED,
+                                data: {
+                                    module_id: this.id,
+                                    chapter_id: data.objects[0].id
+                                }
+                            });
                         }
                     }
                 });
