@@ -240,7 +240,7 @@ export class PageClass {
                 containerInner.style.transition = 'transform 0.15s ease';
 
                 /** scroll factor (velocity) */
-                const scroll_factor = 7.5;
+                const scroll_factor = 2.5;
 
                 /** negative top and positif bottom */
                 const wheel_delta_event = (event as WheelEvent).deltaY < 0 ? 1 : -1;
