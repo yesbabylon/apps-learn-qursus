@@ -708,7 +708,7 @@ var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/inte
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.default = exports.ChapterClass = exports.MessageEventEnum = void 0;
+exports.default = exports.ChapterClass = void 0;
 
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js"));
 
@@ -731,15 +731,6 @@ function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var MessageEventEnum;
-exports.MessageEventEnum = MessageEventEnum;
-
-(function (MessageEventEnum) {
-  MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
-  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
-  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
-})(MessageEventEnum || (exports.MessageEventEnum = MessageEventEnum = {}));
 
 var ChapterClass = /*#__PURE__*/function () {
   function ChapterClass() {
@@ -927,13 +918,17 @@ var ChapterClass = /*#__PURE__*/function () {
               'chapters_ids': [-_this.id]
             }, true);
 
+            _this.parent.context.chapter_index = _this.parent.chapters.findIndex(function (chapter) {
+              return chapter.id === _this.id;
+            }) - 1;
+
             _this.parent.propagateContextChange({
               '$module.remove_chapter': _this.id,
               refresh: true
             });
 
             _LearningAppMessage.LearningAppMessage.send({
-              type: MessageEventEnum.CHAPTER_REMOVED,
+              type: _LearningAppMessage.MessageEventEnum.QU_CHAPTER_REMOVED,
               data: {
                 module_id: _this.parent.id,
                 chapter_id: _this.id
@@ -1682,7 +1677,7 @@ var _EnvService = /*#__PURE__*/function () {
                   case 0:
                     _context.prev = 0;
                     _context.next = 3;
-                    return fetch(_this.default.backend_url + '/envinfo');
+                    return fetch('/envinfo');
 
                   case 3:
                     response = _context.sent;
@@ -2884,8 +2879,11 @@ exports.MessageEventEnum = MessageEventEnum;
 
 (function (MessageEventEnum) {
   MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
-  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
-  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
+  MessageEventEnum["QU_CHAPTER_ADDED"] = "qu_chapter_added";
+  MessageEventEnum["QU_CHAPTER_REMOVED"] = "qu_chapter_removed";
+  MessageEventEnum["QU_PAGE_REMOVED"] = "qu_page_removed";
+  MessageEventEnum["QU_CHAPTER_PROGRESSION_FINISHED"] = "qu_chapter_progression_finished";
+  MessageEventEnum["QU_MODULE_PROGRESSION_FINISHED"] = "qu_module_progression_finished";
 })(MessageEventEnum || (exports.MessageEventEnum = MessageEventEnum = {}));
 
 /**
@@ -2972,17 +2970,9 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-var MessageEventEnum;
 /**
  *
  */
-
-(function (MessageEventEnum) {
-  MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
-  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
-  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
-})(MessageEventEnum || (MessageEventEnum = {}));
-
 var ModuleClass = /*#__PURE__*/function () {
   function ModuleClass() {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -3075,12 +3065,7 @@ var ModuleClass = /*#__PURE__*/function () {
       var $next = (0, _jqueryLib.$)('<div class="page-nav-next page-nav"><i class="arrow material-icons">chevron_right</i></div>').on('click', function () {
         var chapter_context = _this.chapters[_this.context.chapter_index].getContext();
 
-        console.log('page-nav-next::click', _this.context, chapter_context, _this.chapters[_this.context.chapter_index].pages.length); //
-        // if (this.context.mode === 'view' && ++(Object.freeze({...chapter_context})).page_index === this.chapters[this.context.chapter_index].pages.length) {
-        //     console.log('You have finished this chapter');
-        //     window.parent.window.alert('You have finished this chapter');
-        // }
-        // next page
+        console.log('page-nav-next::click', _this.context, chapter_context, _this.chapters[_this.context.chapter_index].pages.length); // next page
 
         if (chapter_context.page_index + 1 < _this.chapters[_this.context.chapter_index].pages.length) {
           (0, _jqueryLib.$)('body').find('.section-container').remove();
@@ -3130,13 +3115,29 @@ var ModuleClass = /*#__PURE__*/function () {
           });
 
           _LearningAppMessage.LearningAppMessage.send({
-            type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
+            type: _LearningAppMessage.MessageEventEnum.EQ_ACTION_LEARN_NEXT,
             data: {
               module_id: _this.id,
               chapter_index: _this.context.chapter_index,
               page_index: _this.context.page_index
             }
           });
+
+          if (_this.context.chapter_index === _this.chapters.length - 1 && _this.context.page_index === _this.chapters[_this.context.chapter_index].pages.length - 1) {
+            _LearningAppMessage.LearningAppMessage.send({
+              type: _LearningAppMessage.MessageEventEnum.QU_MODULE_PROGRESSION_FINISHED,
+              data: {
+                module_id: _this.id
+              }
+            });
+          } else if (_this.context.page_index === _this.chapters[_this.context.chapter_index].pages.length - 1) {
+            _LearningAppMessage.LearningAppMessage.send({
+              type: _LearningAppMessage.MessageEventEnum.QU_CHAPTER_PROGRESSION_FINISHED,
+              data: {
+                chapter_index: _this.context.chapter_index
+              }
+            });
+          }
         }
       });
 
@@ -3249,8 +3250,18 @@ var ModuleClass = /*#__PURE__*/function () {
                   _iterator2.f();
                 }
 
+                _this.context.chapter_index = _this.chapters.length - 1;
+
                 _this.propagateContextChange({
                   refresh: true
+                });
+
+                _LearningAppMessage.LearningAppMessage.send({
+                  type: _LearningAppMessage.MessageEventEnum.QU_CHAPTER_ADDED,
+                  data: {
+                    module_id: _this.id,
+                    chapter_id: data.objects[0].id
+                  }
                 });
               }
             }
@@ -3457,17 +3468,9 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var MessageEventEnum;
 /**
  *
  */
-
-(function (MessageEventEnum) {
-  MessageEventEnum["EQ_ACTION_LEARN_NEXT"] = "eq_action_learn_next";
-  MessageEventEnum["CHAPTER_REMOVED"] = "chapter_removed";
-  MessageEventEnum["PAGE_REMOVED"] = "page_removed";
-})(MessageEventEnum || (MessageEventEnum = {}));
-
 var PageClass = /*#__PURE__*/function () {
   function PageClass() // domain
   {
@@ -3693,7 +3696,7 @@ var PageClass = /*#__PURE__*/function () {
             });
 
             _LearningAppMessage.LearningAppMessage.send({
-              type: MessageEventEnum.PAGE_REMOVED,
+              type: _LearningAppMessage.MessageEventEnum.QU_PAGE_REMOVED,
               data: {
                 page_id: _this.id,
                 chapter_id: _this.parent.id,
@@ -3702,6 +3705,44 @@ var PageClass = /*#__PURE__*/function () {
             });
           }
         });
+        /*
+        * Add scroll event on X axis if the number of leaves on the page is more than 2
+        */
+
+        var handleContainerInnerWheelEvent = function handleContainerInnerWheelEvent(event) {
+          var containerInner = (0, _jqueryLib.$)('.container-inner').get(0);
+          var leaves_count = containerInner.querySelectorAll(' .leaf-container').length;
+          console.log('leaves_count', leaves_count);
+
+          if (leaves_count <= 2) {
+            containerInner.style.transition = '';
+            containerInner.style.transform = '';
+            return;
+          }
+
+          containerInner.style.transition = 'transform 0.15s ease';
+          /** scroll factor (velocity) */
+
+          var scroll_factor = 2.5;
+          /** negative top and positif bottom */
+
+          var wheel_delta_event = event.deltaY < 0 ? 1 : -1;
+          var current_transform = containerInner.style.transform;
+          var current_transform_value = current_transform ? parseInt(current_transform.split('translateX(')[1].split('%)')[0]) : 0; // the containerInner need to be always visible it needs to have at minimum 10% of visibility on the screen
+
+          var new_transform_value = current_transform_value + wheel_delta_event * scroll_factor + '%';
+          containerInner.style.transform = `translateX(${new_transform_value})`;
+        };
+
+        var containerInner = (0, _jqueryLib.$)('.container-inner').get(0);
+        containerInner.addEventListener('wheel', handleContainerInnerWheelEvent, {
+          passive: true
+        });
+
+        if (this.leaves.length < 3) {
+          containerInner.style.transform = '';
+          containerInner.style.transition = '';
+        }
       }
 
       return this.$container;
@@ -3850,22 +3891,16 @@ var _Course = __webpack_require__(/*! ./Course.class */ "./build/Course.class.js
 
 var _LearningAppMessage = __webpack_require__(/*! ./LearningAppMessage */ "./build/LearningAppMessage.js");
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  *
  *
  */
 var Qursus = /*#__PURE__*/function () {
+  // private languages: any[] = ['en'];
   function Qursus() {
     (0, _classCallCheck2.default)(this, Qursus);
     (0, _defineProperty2.default)(this, "module", void 0);
     (0, _defineProperty2.default)(this, "course", void 0);
-    (0, _defineProperty2.default)(this, "languages", ['en']);
     this.onload();
 
     _LearningAppMessage.LearningAppMessage.sendLearningClickEvent();
@@ -3920,8 +3955,7 @@ var Qursus = /*#__PURE__*/function () {
       var _init = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
         var _this = this;
 
-        var environment, _environment;
-
+        var environment;
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -3932,100 +3966,72 @@ var Qursus = /*#__PURE__*/function () {
               case 2:
                 environment = _context2.sent;
 
-                if (_qursusServices.ContextService.user_allowed) {
-                  _context2.next = 8;
-                  break;
-                }
-
-                (0, _jqueryLib.$)('.spinner-wrapper').hide();
-                (0, _jqueryLib.$)('.access-restricted').show();
-                _context2.next = 12;
-                break;
-
-              case 8:
-                _context2.next = 10;
-                return _qursusServices.EnvService.getEnv();
-
-              case 10:
-                _environment = _context2.sent;
-
-                _jqueryLib.$.getJSON(_environment.backend_url + "?get=learn_module&id=" + _qursusServices.ContextService.module_id + '&lang=' + _environment.lang, function (json) {
-                  _this.course = new _Course.CourseClass(json.course_id.id, json.course_id.name, json.course_id.subtitle, json.course_id.title, json.course_id.description);
-                  _this.module = new _Module.ModuleClass(json.id, json.identifier, json.order, json.name, json.title, json.description, json.duration, json.chapters);
-
-                  if (json.course_id && json.course_id.langs_ids) {
-                    _this.languages = json.course_id.langs_ids;
-                  }
-
-                  _this.module.setContext({
-                    chapter_index: _qursusServices.ContextService.chapter_index,
-                    page_index: _qursusServices.ContextService.page_index,
-                    mode: _qursusServices.ContextService.mode
-                  });
-
-                  _this.module.init();
-
+                // unknonw user
+                if (!_qursusServices.ContextService.user_allowed) {
                   (0, _jqueryLib.$)('.spinner-wrapper').hide();
-                  (0, _jqueryLib.$)('body').addClass(_qursusServices.ContextService.mode);
-                  (0, _jqueryLib.$)('.menu-top').find('.cell-program').text(_this.course.title);
-                  (0, _jqueryLib.$)('.menu-top').find('.cell-module').text('Module ' + _this.module.identifier);
+                  (0, _jqueryLib.$)('.access-restricted').show();
+                } // registered user
+                else {
+                    _jqueryLib.$.getJSON(environment.backend_url + "?get=learn_module&id=" + _qursusServices.ContextService.module_id + '&lang=' + environment.lang, function (json) {
+                      _this.course = new _Course.CourseClass(json.course_id.id, json.course_id.name, json.course_id.subtitle, json.course_id.title, json.course_id.description);
+                      _this.module = new _Module.ModuleClass(json.id, json.identifier, json.order, json.name, json.title, json.description, json.duration, json.chapters); // if (json.course_id && json.course_id.langs_ids) {
+                      //     this.languages = json.course_id.langs_ids;
+                      // }
 
-                  _this.module.render();
+                      _this.module.setContext({
+                        chapter_index: _qursusServices.ContextService.chapter_index,
+                        page_index: _qursusServices.ContextService.page_index,
+                        mode: _qursusServices.ContextService.mode
+                      });
 
-                  (0, _jqueryLib.$)('.menu-top .inner .left-cell a').attr('href', '/product/' + _this.course.name);
-                  var $lang_select = (0, _jqueryLib.$)('<select>').on('change', function (event) {
-                    return _this.onchangeLang(event);
-                  });
+                      _this.module.init();
 
-                  var _iterator = _createForOfIteratorHelper(_this.languages),
-                      _step;
+                      (0, _jqueryLib.$)('.spinner-wrapper').hide();
+                      (0, _jqueryLib.$)('body').addClass(_qursusServices.ContextService.mode); // $('.menu-top').find('.cell-program').text(this.course.title);
+                      // $('.menu-top').find('.cell-module').text('Module ' + this.module.identifier);
 
-                  try {
-                    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                      var lang = _step.value;
-                      var $option = (0, _jqueryLib.$)('<option>').attr('value', lang.code).text(lang.name).appendTo($lang_select);
+                      _this.module.render(); // $('.menu-top .inner .left-cell a').attr('href', '/product/' + this.course.name);
+                      // let $lang_select = $('<select>').on('change', (event: any) => this.onchangeLang(event));
+                      // for (let lang of this.languages) {
+                      //     let $option = $('<option>').attr('value', lang.code).text(lang.name).appendTo($lang_select);
+                      //     if (lang.code == environment.lang) {
+                      //         $option.attr('selected', 'selected');
+                      //         $lang_select.val(lang.code);
+                      //     }
+                      // }
+                      //
+                      // $('.menu-top').empty().append($lang_select);
 
-                      if (lang.code == _environment.lang) {
-                        $option.attr('selected', 'selected');
-                        $lang_select.val(lang.code);
+                    }).fail(function (response) {
+                      console.log('Qursus.init => JQueryStatic.getJSON => unexpected error', response);
+                      var error_id = 'unknown_error';
+
+                      if (response.responseJSON && response.responseJSON.errors) {
+                        if (response.responseJSON.errors.NOT_ALLOWED) {
+                          error_id = response.responseJSON.errors.NOT_ALLOWED;
+                        } else if (response.responseJSON.errors.UNKNOWN_ERROR) {
+                          error_id = response.responseJSON.errors.UNKNOWN_ERROR;
+                        }
                       }
-                    }
-                  } catch (err) {
-                    _iterator.e(err);
-                  } finally {
-                    _iterator.f();
+
+                      switch (error_id) {
+                        case 'missing_licence':
+                          (0, _jqueryLib.$)('.missing-license').show();
+                          break;
+
+                        case 'unknown_user':
+                          (0, _jqueryLib.$)('.access-restricted').show();
+                          break;
+
+                        default:
+                          (0, _jqueryLib.$)('.unknown-error').show();
+                      }
+
+                      (0, _jqueryLib.$)('.spinner-wrapper').hide();
+                    });
                   }
 
-                  (0, _jqueryLib.$)('.menu-top .middle-cell').empty().append($lang_select);
-                }).fail(function (response) {
-                  console.log('Qursus.init => JQueryStatic.getJSON => unexpected error', response);
-                  var error_id = 'unknown_error';
-
-                  if (response.responseJSON && response.responseJSON.errors) {
-                    if (response.responseJSON.errors.NOT_ALLOWED) {
-                      error_id = response.responseJSON.errors.NOT_ALLOWED;
-                    } else if (response.responseJSON.errors.UNKNOWN_ERROR) {
-                      error_id = response.responseJSON.errors.UNKNOWN_ERROR;
-                    }
-                  }
-
-                  switch (error_id) {
-                    case 'missing_licence':
-                      (0, _jqueryLib.$)('.missing-license').show();
-                      break;
-
-                    case 'unknown_user':
-                      (0, _jqueryLib.$)('.access-restricted').show();
-                      break;
-
-                    default:
-                      (0, _jqueryLib.$)('.unknown-error').show();
-                  }
-
-                  (0, _jqueryLib.$)('.spinner-wrapper').hide();
-                });
-
-              case 12:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -4043,21 +4049,22 @@ var Qursus = /*#__PURE__*/function () {
     key: "setContext",
     value: function setContext(context) {
       this.module.setContext(context);
-    }
-  }, {
-    key: "onchangeLang",
-    value: function onchangeLang(event) {
-      var $select = (0, _jqueryLib.$)(event.target);
-      var lang = $select.val(); // update env lang
+    } // public onchangeLang(event: any) {
+    //     let $select = $(event.target);
+    //
+    //     let lang = <string>$select.val();
+    //
+    //     // update env lang
+    //     EnvService.setEnv('lang', lang);
+    //
+    //     // reset everything
+    //     $('.viewport-container').remove();
+    //     $('.spinner-wrapper').show();
+    //
+    //     // module
+    //     this.init();
+    // }
 
-      _qursusServices.EnvService.setEnv('lang', lang); // reset everything
-
-
-      (0, _jqueryLib.$)('.viewport-container').remove();
-      (0, _jqueryLib.$)('.spinner-wrapper').show(); // module
-
-      this.init();
-    }
   }, {
     key: "render",
     value: function render() {
@@ -4295,7 +4302,7 @@ var WidgetClass = /*#__PURE__*/function () {
             }
           }
 
-          content = '<pre style="background: #282c34; text-align: left; padding: 0 5px; border-radius: 5px;" data-lang="' + target_lang + '">' + window.hljs.highlight(content, {
+          content = '<pre style="overflow-x: auto;background: #282c34; text-align: left; padding: 0 5px; border-radius: 5px;" data-lang="' + target_lang + '">' + window.hljs.highlight(content, {
             language: target_lang
           }).value.replace(/\n/g, "<br />") + '</pre>';
           break;
@@ -4357,7 +4364,7 @@ var WidgetClass = /*#__PURE__*/function () {
 
         case 'image_popup':
           var image_url = this.image_url ? this.image_url : '';
-          content = "<div class=\"image-container\"><img width=\"100%\" height=\"100%\" src=" + image_url + "></div> ";
+          content = "<div class=\"image-container\"><img width=\"100%\" max-height=\"100%\" src=" + image_url + "></div> ";
           break;
 
         case 'first_capital':
@@ -4412,7 +4419,7 @@ var WidgetClass = /*#__PURE__*/function () {
                 var $leafContainer = _this.parent.getParent().getParent().getContainer();
 
                 var $imageContainer = (0, _jqueryLib.$)('<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 1;"></div>');
-                var $image = (0, _jqueryLib.$)('<img style="height: 100%; width: 100%;" src="' + _this.image_url + '" />').appendTo($imageContainer);
+                var $image = (0, _jqueryLib.$)('<img style="max-height: 100%; width: 100%;" src="' + _this.image_url + '" />').appendTo($imageContainer);
                 var $closeBtn = (0, _jqueryLib.$)('<div style="position: absolute; top: 10px; right: 10px; z-index: 2; cursor: pointer; border: solid 1px black; border-radius: 50%; width: 30px; height: 30px; background-color:white;"><i class="material-icons" style="width: 100%;text-align: center;margin-top: 2px;">close</i></div>').appendTo($imageContainer);
                 $leafContainer.append($imageContainer);
                 $closeBtn.on('click', function () {
