@@ -25,7 +25,7 @@ export class _EnvService {
         if(!this.promise) {
             this.promise = new Promise( async (resolve) => {
                 try {
-                    const response:Response = await fetch(this.default.backend_url + '/envinfo');
+                    const response:Response = await fetch('/envinfo');
                     const env = await response.json();
                     this.assignEnv({...this.default, ...env});
                     resolve(this.environment);

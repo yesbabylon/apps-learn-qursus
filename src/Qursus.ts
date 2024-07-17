@@ -56,7 +56,6 @@ class Qursus {
         }
         // registered user
         else {
-            const environment = await EnvService.getEnv();
             $.getJSON(environment.backend_url + "?get=learn_module&id=" + ContextService.module_id + '&lang=' + environment.lang, (json: Record<string, any>): void => {
 
                 this.course = new CourseClass(json.course_id.id, json.course_id.name, json.course_id.subtitle, json.course_id.title, json.course_id.description);
