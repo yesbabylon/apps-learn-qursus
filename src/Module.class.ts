@@ -161,11 +161,16 @@ export class ModuleClass {
                     page_index: this.context.page_index
                 });
 
+                let chapter_index = this.context.chapter_index;
+                if (chapter_index === this.chapters.length - 1) {
+                    chapter_index = chapter_index + 1
+                }
+
                 LearningAppMessage.send({
                     type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
                     data: {
                         module_id: this.id,
-                        chapter_index: this.context.chapter_index,
+                        chapter_index: chapter_index,
                         page_index: this.context.page_index
                     }
                 });
@@ -185,7 +190,7 @@ export class ModuleClass {
                     LearningAppMessage.send({
                         type: MessageEventEnum.QU_CHAPTER_PROGRESSION_FINISHED,
                         data: {
-                            chapter_index: this.context.chapter_index
+                            chapter_index: chapter_index
                         }
                     })
                 }
