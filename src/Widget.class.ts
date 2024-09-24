@@ -143,11 +143,15 @@ export class WidgetClass {
             case 'code':
                 // normalize code: remove html layout
                 content = $(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text();
-                // identitfy target lang
-                let target_lang = 'javascript';
+                // identify target lang
+                let target_lang = 'plaintext';
                 let clues: any = {
                     'php': ['```php'],
-                    'javascript': ['```javascript']
+                    'javascript': ['```javascript'],
+                    'json': ['```json'],
+                    'shell': ['```shell'],
+                    'bash': ['```bash'],
+                    'plaintext': ['```plaintext'],
                 };
                 for (let lang in clues) {
                     let lang_clues = clues[lang];
@@ -165,7 +169,7 @@ export class WidgetClass {
                         }
                     }
                 }
-                content = '<pre style="overflow-x: auto;background: #282c34; text-align: left; padding: 0 5px; border-radius: 5px;" data-lang="' + target_lang + '">' + window.hljs.highlight(content, {language: target_lang}).value.replace(/\n/g, "<br />") + '</pre>';
+                content = '<pre style="overflow-x: auto;background: #f9f8f7; text-align: left; padding: 0 5px 16px; border-radius: 5px;" data-lang="' + target_lang + '">' + window.hljs.highlight(content, {language: target_lang}).value.replace(/\n/g, "<br />") + '</pre>';
                 break;
             case 'page_title':
             case 'chapter_title':
