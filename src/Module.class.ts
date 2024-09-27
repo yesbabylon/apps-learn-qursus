@@ -146,6 +146,43 @@ export class ModuleClass {
                     this.context.page_index = 0;
                     this.render();
                     this.onContextChange({});
+
+                    // notify 'next' action
+                    if (this.context.mode == 'view') {
+                        ApiService.fetch('?do=learn_next', {
+                            module_id: this.id,
+                            chapter_index: this.context.chapter_index,
+                            page_index: this.context.page_index
+                        });
+
+                        LearningAppMessage.send({
+                            type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
+                            data: {
+                                module_id: this.id,
+                                chapter_index: this.context.chapter_index,
+                                page_index: this.context.page_index
+                            }
+                        });
+
+                        if (
+                            this.context.chapter_index === this.chapters.length &&
+                            this.context.page_index === this.chapters[this.context.chapter_index].pages.length
+                        ) {
+                            LearningAppMessage.send({
+                                type: MessageEventEnum.QU_MODULE_PROGRESSION_FINISHED,
+                                data: {
+                                    module_id: this.id
+                                }
+                            })
+                        } else if (this.context.page_index === this.chapters[this.context.chapter_index].pages.length) {
+                            LearningAppMessage.send({
+                                type: MessageEventEnum.QU_CHAPTER_PROGRESSION_FINISHED,
+                                data: {
+                                    chapter_index: this.context.chapter_index
+                                }
+                            })
+                        }
+                    }
                 } else {
                     // no more pages: hide 'next' button
                     this.context.next_active = false;
@@ -153,48 +190,7 @@ export class ModuleClass {
                 }
             }
 
-            // notify 'next' action
-            if (this.context.mode == 'view') {
-                ApiService.fetch('?do=learn_next', {
-                    module_id: this.id,
-                    chapter_index: this.context.chapter_index,
-                    page_index: this.context.page_index
-                });
 
-                let chapter_index = this.context.chapter_index;
-                if (chapter_index === this.chapters.length - 1) {
-                    chapter_index = chapter_index + 1
-                }
-
-                LearningAppMessage.send({
-                    type: MessageEventEnum.EQ_ACTION_LEARN_NEXT,
-                    data: {
-                        module_id: this.id,
-                        chapter_index: chapter_index,
-                        page_index: this.context.page_index
-                    }
-                });
-
-                if (
-                    this.context.chapter_index === this.chapters.length - 1 &&
-                    this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1
-                ) {
-                    LearningAppMessage.send({
-                        type: MessageEventEnum.QU_MODULE_PROGRESSION_FINISHED,
-                        data: {
-                            module_id: this.id
-                        }
-                    })
-
-                } else if (this.context.page_index === this.chapters[this.context.chapter_index].pages.length - 1) {
-                    LearningAppMessage.send({
-                        type: MessageEventEnum.QU_CHAPTER_PROGRESSION_FINISHED,
-                        data: {
-                            chapter_index: chapter_index
-                        }
-                    })
-                }
-            }
         });
 
 
